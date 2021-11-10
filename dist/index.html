@@ -12,18 +12,18 @@
     <button>Map</button>
     <button>Login / Logout</button>
   </aside>
-  <header>
-    <div class="header-container">
-      <h1>Greetings, User!</h1>
-      <h2>You have spent $$$ on trips this year.</h2>
-    </div>
-    <img alt="company logo">
-  </header>
   <main>
+    <header>
+      <div class="header-container">
+        <h1>Greetings, User!</h1>
+        <h2>You have spent $$$ on trips this year.</h2>
+      </div>
+      <img alt="company logo">
+    </header>
     <section type="form" class="main-form">
       <h2>Where do you want to go?</h2>
       <input type="date" title="Date">
-      <input type="number" title="Duration">
+      <input type="number" range="1-365" units="days" title="Duration">
       <input type="number" title="Number of Travelers">
       <input type="checkbox" title="Destination">
     </section>
