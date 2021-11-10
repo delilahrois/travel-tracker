@@ -4,10 +4,60 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Travel Tracker</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
+  <aside class="nav">
+    <button>Calendar</button>
+    <button>Map</button>
+    <button>Login / Logout</button>
+  </aside>
+  <header>
+    <div class="header-container">
+      <h1>Greetings, User!</h1>
+      <h2>You have spent $$$ on trips this year.</h2>
+    </div>
+    <img alt="company logo">
+  </header>
+  <main>
+    <section type="form" class="main-form">
+      <h2>Where do you want to go?</h2>
+      <input type="date" title="Date">
+      <input type="number" title="Duration">
+      <input type="number" title="Number of Travelers">
+      <input type="checkbox" title="Destination">
+    </section>
+    <section class="main-current-trip">
+      <img>
+      <h3>You are currently in a place</h3>
+      <p>
+        Here's some info about where you are 
+      </p>
+    </section>
+    <section class="main-trips-board">
+      <article class="main-trips-board-destination">
+        <h3>Past Trips</h3>
+        <img>
+        <p>
+          This is a place you've been to already
+        </p>
+      </article>
+      <article class="main-trips-board-destination">
+        <h3>Upcoming Trips</h3>
+        <img>
+        <p>
+          This is a place you're going to soon
+        </p>
+      </article>
+      <article class="main-trips-board-destination">
+        <h3>Pending Trips</h3>
+        <img>
+        <p>
+          This is a trip awaiting confirmation from your travel agent
+        </p>
+      </article>
+    </section>
+  </main>
   
   <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
   <script src="bundle.js"></script>
