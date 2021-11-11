@@ -1,11 +1,14 @@
 import chai from 'chai';
 const expect = chai.expect;
 const Trip = require('../src/trip');
+const Traveler = require('../src/traveler');
 
 describe('Trip', () => {
 
   let trip1;
   let tripDetails;
+  let traveler1;
+  let travelerDetails;
 
   beforeEach(() => {
 
@@ -52,7 +55,15 @@ describe('Trip', () => {
       }
     ];
 
-    trip1 = new Trip(tripDetails[0]);
+    travelerDetails = {
+      "id": 3,
+      "name": "Sibby Dawidowitsch",
+      "travelerType": "shopper"
+    };
+
+    trip1 = new Trip(tripDetails[2]);
+
+    traveler1 = new Traveler(travelerDetails);
 
   });
 
@@ -67,5 +78,11 @@ describe('Trip', () => {
     expect(trip1).to.be.an.instanceOf(Trip);
 
   });
+
+  it('should have a userID that matches the traveler going on the trip', () => {
+
+    expect(trip1.userID).to.equal(traveler1.id);
+
+  })
 
 });
