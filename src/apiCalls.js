@@ -1,13 +1,16 @@
-const fetchTravelers = () => fetch('http://localhost:3001/api/v1/travelers');
+// GET requests
 
-const fetchSingleTraveler = (id) => fetch(`http://localhost:3001/api/
+export const fetchTravelers = () => 
+  fetch('http://localhost:3001/api/v1/travelers');
+
+export const fetchSingleTraveler = (id) => fetch(`http://localhost:3001/api/
   v1/travelers/${id}`);
 
-const fetchTrips = () => fetch('http://localhost:3001/api/v1/trips');
+export const fetchTrips = () => fetch('http://localhost:3001/api/v1/trips');
 
-const fetchDestinations = () => 
+export const fetchDestinations = () => 
   fetch('http://localhost:3001/api/v1/destinations');
 
+  
+// POST requests
 
-export { fetchTravelers, fetchSingleTraveler, fetchTrips, 
-  fetchDestinations };

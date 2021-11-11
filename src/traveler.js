@@ -1,9 +1,14 @@
 class Traveler {
-  constructor(traveler) {
-    this.id = traveler.id;
-    this.name = traveler.name;
-    this.travelerType = traveler.travelerType;
+  constructor(data) {
+    this.id = data.id;
+    this.name = data.name;
+    this.travelerType = data.travelerType;
+    this.totalSpentOnTripsThisYear = null;
   }
+
+  // calculateTripsTotal() {
+  //   this.totalSpentOnTripsThisYear 
+  // }
 }
 
-export default Traveler;
+module.exports = Traveler;
