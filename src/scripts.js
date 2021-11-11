@@ -3,6 +3,7 @@
 import './css/base.scss';
 import { fetchTravelers, fetchSingleTraveler, fetchTrips, 
   fetchDestinations } from './apiCalls';
+import Traveler from './traveler';
 
 // An example of how you tell webpack to use an image 
 // (also need to link to it in the index.html)
