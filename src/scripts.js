@@ -5,6 +5,7 @@ import { fetchTravelers, fetchSingleTraveler, fetchTrips,
   fetchDestinations } from './apiCalls';
 import Traveler from './traveler';
 import Trip from './trip';
+import TravelerRepository from './travelerRepo';
 
 // An example of how you tell webpack to use an image 
 // (also need to link to it in the index.html)
@@ -13,9 +14,10 @@ import './images/turing-logo.png'
 
 // Global Variables
 
-// let traveler;
-// let travelerRepo;
-// let trip;
+let traveler;
+let travelerRepo;
+let trip;
+let tripRepo;
 // let destination;
 
 
@@ -30,15 +32,26 @@ const fetchData = () => {
   Promise.all([ fetchTravelers(), fetchTrips(), fetchDestinations() ])
     .then(data => {return Promise.all(data.map(result => result.json()));
     }).then(data => {
+      getTravelers(data[0].travelers)
+      // console.log(travelerRepo)
+      // getTrips(data[1]);
       console.log(data)
-    // call functions to instantiate new instances of class here
+    })
+    .catch(error => {
+      console.log(error)
     })
 }
 
 
 
-// const createTraveler = (data) => {
-//   travelerRepo = new TravelerRepository(data); 
+const getTravelers = (travelerData) => {
+  travelerRepo = new TravelerRepository(travelerData);
+  travelerRepo.instantiateTravelers()
+}
+
+// const getTrips = (tripData) => {
+//   tripRepo = new TripRepository(tripData);
+  
 // }
 
 // Event Listeners 
