@@ -6,6 +6,9 @@ import { fetchTravelers, fetchSingleTraveler, fetchTrips,
 import Traveler from './traveler';
 import Trip from './trip';
 import TravelerRepository from './travelerRepo';
+import TripRepository from './tripRepo';
+import Destination from './destination';
+import DestinationRepository from './destinationRepo';
 
 // An example of how you tell webpack to use an image 
 // (also need to link to it in the index.html)
@@ -18,7 +21,8 @@ let traveler;
 let travelerRepo;
 let trip;
 let tripRepo;
-// let destination;
+let destination;
+let destinationRepo;
 
 
 // Query Selectors
@@ -33,9 +37,11 @@ const fetchData = () => {
     .then(data => {return Promise.all(data.map(result => result.json()));
     }).then(data => {
       getTravelers(data[0].travelers)
-      // console.log(travelerRepo)
-      // getTrips(data[1]);
-      console.log(data)
+      console.log(travelerRepo)
+      getTrips(data[1].trips);
+      console.log(tripRepo)
+      getDestinations(data[2].destinations);
+      console.log(destinationRepo);
     })
     .catch(error => {
       console.log(error)
@@ -49,10 +55,15 @@ const getTravelers = (travelerData) => {
   travelerRepo.instantiateTravelers()
 }
 
-// const getTrips = (tripData) => {
-//   tripRepo = new TripRepository(tripData);
-  
-// }
+const getTrips = (tripData) => {
+  tripRepo = new TripRepository(tripData);
+  tripRepo.createTripsList();
+}
+
+const getDestinations = (destinationData) => {
+  destinationRepo = new DestinationRepository(destinationData);
+  destinationRepo.createDestinationList();
+}
 
 // Event Listeners 
 

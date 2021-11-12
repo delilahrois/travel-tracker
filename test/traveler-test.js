@@ -22,27 +22,30 @@ describe('Traveler', () => {
   it('should be a function', () => {
 
     expect(Traveler).to.be.a('function');
-
   });
 
   it('should instantiate Traveler', () => {
 
     expect(traveler1).to.be.an.instanceOf(Traveler);
-
   });
 
-  it('should have an id, name and traveler type', () => {
+  it('should have an id', () => {
 
     expect(traveler1.id).to.equal(18);
-    expect(traveler1.name).to.equal('Sheila Valentetti');
-    expect(traveler1.travelerType).to.equal('foodie');
-
   });
 
-  // it('should have a total amount spent on trips this year', () => {
+  it('should have a name', () => {
 
-  //   expect()
+    expect(traveler1.name).to.equal('Sheila Valentetti');
+  });
 
-  // });
+  it('should show what type of traveler they are', () => {
 
+    expect(traveler1.travelerType).to.equal('foodie');
+  });
+
+  it.skip('should be able to calculate their total spent on trips this year', () => {
+
+    expect(traveler1.calculateTripsTotal()).to.equal();
+  });
 });
