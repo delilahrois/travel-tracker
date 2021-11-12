@@ -70,19 +70,50 @@ describe('Trip', () => {
   it('should be a function', () => {
 
     expect(Trip).to.be.a('function');
-
   });
 
   it('should instantiate a trip', () => {
 
     expect(trip1).to.be.an.instanceOf(Trip);
+  });
 
+  it('should have an ID', () => {
+
+    expect(trip1.id).to.equal(3);
   });
 
   it('should have a userID that matches the traveler going on the trip', () => {
 
     expect(trip1.userID).to.equal(traveler1.id);
+  });
 
-  })
+  it('should have an ID that matches the destination', () => {
 
+    expect(trip1.destinationID).to.equal(22);
+  });
+
+  it('should have a list of travelers', () => {
+
+    expect(trip1.travelers).to.equal(4);
+  });
+
+  it('should show the date of the trip', () => {
+
+    expect(trip1.date).to.equal('2022/05/22');
+  });
+
+  it('should track the trip duration in days', () => {
+
+    expect(trip1.duration).to.equal(17);
+  });
+
+  it('should show the status of the trip', () => {
+
+    expect(trip1.status).to.equal('approved');
+  });
+
+  it('should have a list of suggested activities', () => {
+
+    expect(trip1.suggestedActivities).to.be.an('array');
+  });
 });
