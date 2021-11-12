@@ -40,8 +40,8 @@ const fetchData = () => {
       console.log(travelerRepo)
       getTrips(data[1].trips);
       console.log(tripRepo)
-      // getDestinations(data[2].destinations);
-      // console.log(destinationRepo);
+      getDestinations(data[2].destinations);
+      console.log(destinationRepo);
     })
     .catch(error => {
       console.log(error)
@@ -60,10 +60,10 @@ const getTrips = (tripData) => {
   tripRepo.createTripsList();
 }
 
-// const getDestinations = () => {
-//   destinationRepo = new DestinationRepository(destinationData);
-//   destinationRepo.createList();
-// }
+const getDestinations = (destinationData) => {
+  destinationRepo = new DestinationRepository(destinationData);
+  destinationRepo.createDestinationList();
+}
 
 // Event Listeners 
 
