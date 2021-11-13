@@ -17,6 +17,7 @@ import './images/turing-logo.png'
 
 // Global Variables
 
+let currentUser;
 let traveler;
 let travelerRepo;
 let trip;
@@ -41,7 +42,7 @@ const fetchData = () => {
       getTrips(data[1].trips);
       console.log(tripRepo)
       getDestinations(data[2].destinations);
-      console.log(destinationRepo);
+      console.log(destinationRepo)
     })
     .catch(error => {
       console.log(error)
@@ -64,6 +65,11 @@ const getDestinations = (destinationData) => {
   destinationRepo = new DestinationRepository(destinationData);
   destinationRepo.createDestinationList();
 }
+
+const getCurrentUser = () => {
+  currentUser = new Traveler(travelerRepo.getRandomTraveler())
+}
+
 
 // Event Listeners 
 
