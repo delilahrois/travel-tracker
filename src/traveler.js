@@ -4,6 +4,10 @@ class Traveler {
     this.name = data.name;
     this.travelerType = data.travelerType;
     this.totalSpentOnTripsThisYear = null;
+    this.pastTrips = [];
+    this.currentTrips = [];
+    this.upcomingTrips = [];
+    this.pendingTrips = [];
   }
 
   getFirstName() {

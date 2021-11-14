@@ -20,24 +20,20 @@ import dayjs from 'dayjs';
 
 const today = '2021/07/27';
 let currentUser;
-let currentAnnualTotal;
-let traveler;
 let travelerRepo;
-let trip;
 let tripRepo;
-let destination;
 let destinationRepo;
-
-console.log(today)
-let aYearAgo = dayjs(today).subtract(1, 'year').format('YYYY/MM/DD');
-console.log(aYearAgo)
+const aYearAgo = dayjs(today).subtract(1, 'year').format('YYYY/MM/DD');
 
 
 // Query Selectors
 
 const headerGreeting = document.querySelector('#header-greeting')
 const headerMessage = document.querySelector('#header-message')
-const currentTripBoard = document.querySelector('#main-current-trip');
+const currentTripBoard = document.querySelector('#currentTripBoard');
+const pastTripBoard = document.querySelector('#pastTripBoard')
+const upcomingTripBoard = document.querySelector('#upcomingTripBoard')
+const pendingTripBoard = document.querySelector('#pendingTripBoard')
 
 
 
@@ -45,23 +41,18 @@ const currentTripBoard = document.querySelector('#main-current-trip');
 
 const fetchData = () => {
   Promise.all([ fetchTravelers(), fetchTrips(), fetchDestinations() ])
-    .then(data => {return Promise.all(data.map(result => result.json()));
+    .then(data => {
+      return Promise.all(data.map(result => result.json()));
     }).then(data => {
       getTravelers(data[0].travelers)
       getTrips(data[1].trips);
       getDestinations(data[2].destinations);
-      getCurrentUser();
-      updateGreeting();
-      getCurrentUserTrips();
-      // console.log(tripRepo.currentUserTrips)
-      getAnnualTotal();
-      updateTotal();
+      updateDOM();
     })
     .catch(error => {
       console.log(error)
     })
 }
-
 
 
 const getTravelers = (travelerData) => {
@@ -103,50 +94,74 @@ const getTripCost = () => {
   })
 }
 
-
 const getAnnualTotal = () => {
-  currentUser.totalSpentOnTripsThisYear = tripRepo.currentUserTrips.filter((trip) => {
-    return trip.date >= aYearAgo && trip.date <= today;
-  }).reduce((sum, trip) => {
-    getTripCost();
-    sum += trip.cost;
-    return sum;
-  }, 0) * Math.round(1.1);
-  console.log(currentUser.totalSpentOnTripsThisYear)
+  let total = tripRepo.currentUserTrips
+    .filter((trip) => {
+      return trip.date >= aYearAgo && trip.date <= today;
+    }).reduce((sum, trip) => {
+      getTripCost();
+      sum += trip.cost;
+      return sum;
+    }, 0)
+  currentUser.totalSpentOnTripsThisYear = Math.round(total * 1.1);
 }
-
-// currentUserDestinations.reduce(sum, destination => {
-// sum+= (destination.lodgingPerDay * trip.travelers) + (destination.flightCostPerPerson * trip.travelers);
-//  return sum;
-// }, 0)
-
-
-
-
-
-
-
-
-
 
 const updateTotal = () => {
   headerMessage.innerText = `You have spent 
   $${currentUser.totalSpentOnTripsThisYear} on trips this year.`;
 }
 
+const updateDOM = () => {
+  getCurrentUser();
+  updateGreeting();
+  getCurrentUserTrips();
+  getAnnualTotal();
+  updateTotal();
+  sortTrips();
+  displayTripBoard();
+}
 
+const sortTrips = () => {
+  tripRepo.currentUserTrips.forEach((trip) => {
+    if (trip.date < today && trip.date >= aYearAgo && 
+      trip.status === 'approved') {
+      currentUser.pastTrips.push(trip);
+    } else if (trip.date === today && trip.status === 'approved') {
+      currentUser.currentTrips.push(trip);
+    } else if (trip.date > today && trip.status === 'approved') {
+      currentUser.upcomingTrips.push(trip);
+    } else if (trip.date > today && trip.status === 'pending') {
+      currentUser.pendingTrips.push(trip);
+    }
+  })
+}
 
-
-// then we want to show the current user's trips on the dashboard in 
-// the appropriate sections of the page (past, present, upcoming, pending)
-
-// add function to get the total amount spent on trips this year 
-
-// handler function for updateGreeting, getting trips for current user
-//  and displaying them, getting total spent on trips this year
-
-
-
+const displayTripBoard = () => {
+  currentUser.pastTrips.forEach((trip) => {
+    pastTripBoard.innerHTML += `
+    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+    <h3>${trip.destinationInfo.destination}</h3>
+    `
+  })
+  currentUser.currentTrips.forEach((trip) => {
+    currentTripBoard.innerHTML += `
+    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+    <h3>${trip.destinationInfo.destination}</h3>
+    `
+  })
+  currentUser.upcomingTrips.forEach((trip) => {
+    upcomingTripBoard.innerHTML += `
+    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+    <h3>${trip.destinationInfo.destination}</h3>
+    `
+  })
+  currentUser.pendingTrips.forEach((trip) => {
+    pendingTripBoard.innerHTML += `
+    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+    <h3>${trip.destinationInfo.destination}</h3>
+    `
+  })
+}
 
 
 // Event Listeners 

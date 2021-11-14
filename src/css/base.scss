@@ -24,7 +24,7 @@ header {
   height: 25%;
   display: flex;
   justify-content: space-between;
-  padding: 40px;
+  padding: 20px;
 }
 
 header > div > img {
@@ -39,6 +39,7 @@ main {
 section {
   border: 2px solid green;
   height: 15%;
+  padding-bottom: 20px;
 }
 
 .main-trips-board {
@@ -54,9 +55,16 @@ section {
   height: 18%;
 }
 
+.main-form {
+  padding-left: 20px;
+}
+
 article {
   border: 2px solid pink;
   width: 33.33%;
+  // padding: 20px;
+  margin-bottom: 20px;
+  padding-left: 20px;
 }
 
 p {
@@ -69,4 +77,13 @@ button {
   padding: 5px;
   font-family: $font;
 }
+
+article > img {
+  height: 100px;
+}
+
+article > h3 {
+  font-size: x-large;
+}
+
 
