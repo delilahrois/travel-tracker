@@ -6,9 +6,9 @@ class Traveler {
     this.totalSpentOnTripsThisYear = null;
   }
 
-  // calculateTripsTotal() {
-  //   this.totalSpentOnTripsThisYear 
-  // }
+  getFirstName() {
+    return this.name.split(' ')[0];
+  }
 }
 
 module.exports = Traveler;
