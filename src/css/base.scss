@@ -7,6 +7,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: row;
+  font-family: $font;
 }
 
 aside {
@@ -21,6 +22,13 @@ aside {
 header {
   border: 2px solid red;
   height: 25%;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+header > div > img {
+  height: 200px;
 }
 
 main {
@@ -31,6 +39,7 @@ main {
 section {
   border: 2px solid green;
   height: 15%;
+  padding-bottom: 20px;
 }
 
 .main-trips-board {
@@ -46,13 +55,35 @@ section {
   height: 18%;
 }
 
+.main-form {
+  padding-left: 20px;
+}
+
 article {
   border: 2px solid pink;
   width: 33.33%;
-  
+  // padding: 20px;
+  margin-bottom: 20px;
+  padding-left: 20px;
 }
 
 p {
   border: 2px solid black;
 }
+
+button {
+  border: 0px;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: $font;
+}
+
+article > img {
+  height: 100px;
+}
+
+article > h3 {
+  font-size: x-large;
+}
+
 
