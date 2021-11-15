@@ -24,7 +24,7 @@ class DestinationRepository {
   findDestinationID(destinationName) {
     this.destinationList.find((place) => {
       return place.destination === destinationName;
-    })
+    }).id;
   }
 }
 

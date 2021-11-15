@@ -24,6 +24,7 @@ let travelerRepo;
 let tripRepo;
 let destinationRepo;
 const aYearAgo = dayjs(today).subtract(1, 'year').format('YYYY/MM/DD');
+let newTrip;
 
 
 // Query Selectors
@@ -38,7 +39,7 @@ const submitTripBtn = document.querySelector('#submitTripBtn');
 const formDateInput = document.querySelector('#formDate');
 const formDurationInput = document.querySelector('#formDuration');
 const formNumberTravelersInput = document.querySelector('#formNumberTravelers');
-const formDestinationInput = document.querySelector('#formDestination');
+const formDestinationInput = document.querySelector('#formDestination').value;
 const newTripForm = document.querySelector('#newTripForm');
 
 
@@ -170,25 +171,47 @@ const displayTripBoard = () => {
   })
 }
 
+const getNewID = () => {
+  let mostRecentID = tripRepo.tripList.sort((a, b) => {
+    return b.id - a.id;
+  })[0].id;
+  let newID = mostRecentID + 1;
+  return newID;
+}
 
-const submitNewTrip = () => {
-  // const destinationObject = destinationRepo
-  //   .findDestinationID(`${formDestinationInput.value}`);
-  // console.log(formDestinationInput.value)
-  let newTrip = new Trip({
-    id: 1000,
+const createNewTrip = () => {
+  newTrip = new Trip({
+    id: getNewID(),
     userID: currentUser.id,
-    // destinationID: destinationObject.id,
-    destinationID: null,
-    travelers: formNumberTravelersInput.value,
-    date: formDateInput.value,
-    duration: formDurationInput.value,
+    destinationID: 50,
+    travelers: parseInt(formNumberTravelersInput.value),
+    date: dayjs(formDateInput.value).format('YYYY/MM/DD'),
+    duration: parseInt(formDurationInput.value),
     status: 'pending',
-    suggestedActivities: [],
-    // destinationInfo: destinationObject
+    suggestedActivities: []
   })
   currentUser.pendingTrips.push(newTrip);
+  tripRepo.tripList.push(newTrip);
   console.log(newTrip)
+}
+
+const postNewTrip = () => {
+  fetch('http://localhost:3001/api/v1/trips', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newTrip)
+  }).then(response => response.json())
+    .then(data => console.log(data))
+    .then(updateDOM())
+    .catch(error => console.log(error))
+}
+
+
+const submitNewTrip = () => {
+  createNewTrip();
+  postNewTrip();
 }
 
 
