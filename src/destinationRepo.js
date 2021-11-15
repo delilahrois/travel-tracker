@@ -20,6 +20,12 @@ class DestinationRepository {
       return destination.id === destinationID;
     })
   }
+
+  findDestinationID(destinationName) {
+    this.destinationList.find((place) => {
+      return place.destination === destinationName;
+    })
+  }
 }
 
 module.exports = DestinationRepository;

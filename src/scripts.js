@@ -35,6 +35,12 @@ const pastTripBoard = document.querySelector('#pastTripBoard');
 const upcomingTripBoard = document.querySelector('#upcomingTripBoard');
 const pendingTripBoard = document.querySelector('#pendingTripBoard');
 const submitTripBtn = document.querySelector('#submitTripBtn');
+const formDateInput = document.querySelector('#formDate');
+const formDurationInput = document.querySelector('#formDuration');
+const formNumberTravelersInput = document.querySelector('#formNumberTravelers');
+const formDestinationInput = document.querySelector('#formDestination');
+const newTripForm = document.querySelector('#newTripForm');
+
 
 
 
@@ -162,6 +168,27 @@ const displayTripBoard = () => {
     <h3>${trip.destinationInfo.destination}</h3>
     `
   })
+}
+
+
+const submitNewTrip = () => {
+  // const destinationObject = destinationRepo
+  //   .findDestinationID(`${formDestinationInput.value}`);
+  // console.log(formDestinationInput.value)
+  let newTrip = new Trip({
+    id: 1000,
+    userID: currentUser.id,
+    // destinationID: destinationObject.id,
+    destinationID: null,
+    travelers: formNumberTravelersInput.value,
+    date: formDateInput.value,
+    duration: formDurationInput.value,
+    status: 'pending',
+    suggestedActivities: [],
+    // destinationInfo: destinationObject
+  })
+  currentUser.pendingTrips.push(newTrip);
+  console.log(newTrip)
 }
 
 
