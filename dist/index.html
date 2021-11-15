@@ -27,10 +27,16 @@
     </header>
     <section type="form" class="main-form">
       <h2>Where do you want to go?</h2>
-      <input type="date" title="Date">
-      <input type="number" range="1-365" units="days" title="Duration">
-      <input type="number" title="Number of Travelers">
-      <input type="checkbox" title="Destination">
+      <label for="date">Departure Date</label>
+      <input type="date" name="date" id="formDate">
+      <label for="duration">Trip Duration</label>
+      <input type="number" min="1" max="365" name="duration" id="formDuration">
+      <label for="numberTravelers">Number of Travelers</label>
+      <input type="number" min="1" max="100" name="numberTravelers" id="formNumberTravelers">
+      <label for="destination">Destination</label>
+      <select name="destination" id="formDestination">
+        <option>Select Your Destination</option>
+      </select>
     </section>
     <section class="main-current-trip">
       <article class="main-current-trip-board" id="currentTripBoard">
