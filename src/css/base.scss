@@ -76,6 +76,7 @@ button {
   border-radius: 5px;
   padding: 5px;
   font-family: $font;
+  font-size: large;
 }
 
 article > img {
@@ -84,6 +85,15 @@ article > img {
 
 article > h3 {
   font-size: x-large;
+}
+
+select, input {
+  font-family: $font;
+  padding: 5px;
+}
+
+label {
+  padding-left: 20px;
 }
 
 

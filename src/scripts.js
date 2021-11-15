@@ -28,12 +28,13 @@ const aYearAgo = dayjs(today).subtract(1, 'year').format('YYYY/MM/DD');
 
 // Query Selectors
 
-const headerGreeting = document.querySelector('#header-greeting')
-const headerMessage = document.querySelector('#header-message')
+const headerGreeting = document.querySelector('#header-greeting');
+const headerMessage = document.querySelector('#header-message');
 const currentTripBoard = document.querySelector('#currentTripBoard');
-const pastTripBoard = document.querySelector('#pastTripBoard')
-const upcomingTripBoard = document.querySelector('#upcomingTripBoard')
-const pendingTripBoard = document.querySelector('#pendingTripBoard')
+const pastTripBoard = document.querySelector('#pastTripBoard');
+const upcomingTripBoard = document.querySelector('#upcomingTripBoard');
+const pendingTripBoard = document.querySelector('#pendingTripBoard');
+const submitTripBtn = document.querySelector('#submitTripBtn');
 
 
 
@@ -167,3 +168,4 @@ const displayTripBoard = () => {
 // Event Listeners 
 
 window.addEventListener('load', fetchData);
+submitTripBtn.addEventListener('click', submitNewTrip);
