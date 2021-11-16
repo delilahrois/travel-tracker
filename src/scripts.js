@@ -93,13 +93,13 @@ const getCurrentUser = () => {
   let parsedID = parseInt(travelerID);
   if (loginPassword.value === 'travel') {
     currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
-    dashboard.classList.remove('hidden')
-    loginPage.classList.add('hidden')
+    dashboard.classList.remove('hidden');
+    loginPage.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
   } else {
     alert('Invalid password. Try again.');
     logout();
   }
-  // console.log(currentUser)
 }
 
 const updateGreeting = () => {
@@ -177,14 +177,16 @@ const displayTripBoard = () => {
   if (currentUser.currentTrips) {
     currentUser.currentTrips.forEach((trip) => {
       currentTripBoard.innerHTML += `
-      <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <img src="${trip.destinationInfo.image}" 
+      alt="${trip.destinationInfo.alt}">
       <h3>${trip.destinationInfo.destination}</h3>
       `
     })
   } else {
     currentTripBoard.innerHTML = `
     <h3>Current Trips</h3>
-    <p>You are not currently traveling! We can't wait to see where you'll go next.</p>
+    <p>You are not currently traveling! We can't wait to 
+    see where you'll go next.</p>
   `;
   }
   currentUser.pastTrips.forEach((trip) => {
@@ -284,6 +286,7 @@ const showTripEstimate = () => {
 const logout = () => {
   loginPage.classList.remove('hidden');
   dashboard.classList.add('hidden')
+  logoutBtn.classList.add('hidden');
   loginUsername.value = '';
   loginPassword.value = '';
 }
