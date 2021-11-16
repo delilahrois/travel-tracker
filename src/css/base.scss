@@ -52,6 +52,9 @@ section {
 .main-current-trip {
   border: 2px solid magenta;
   height: 18%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
 .main-form {

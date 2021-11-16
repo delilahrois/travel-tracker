@@ -18,7 +18,7 @@ import dayjs from 'dayjs';
 
 // Global Variables
 
-const today = '2021/07/27';
+const today = '2021/11/15';
 let currentUser;
 let travelerRepo;
 let tripRepo;
@@ -99,7 +99,7 @@ const getCurrentUser = () => {
     alert('Invalid password. Try again.');
     logout();
   }
-  console.log(currentUser)
+  // console.log(currentUser)
 }
 
 const updateGreeting = () => {
@@ -125,7 +125,7 @@ const getTripCost = () => {
 const getAnnualTotal = () => {
   let total = tripRepo.currentUserTrips
     .filter((trip) => {
-      return trip.date >= aYearAgo && trip.date <= today;
+      return trip.date >= aYearAgo && trip.status === 'approved';
     }).reduce((sum, trip) => {
       getTripCost();
       sum += trip.cost;
@@ -143,6 +143,7 @@ const updateDOM = () => {
   getCurrentUser();
   updateGreeting();
   getCurrentUserTrips();
+  getTripCost();
   getAnnualTotal();
   updateTotal();
   sortTrips();
@@ -151,8 +152,7 @@ const updateDOM = () => {
 
 const sortTrips = () => {
   tripRepo.currentUserTrips.forEach((trip) => {
-    if (trip.date < today && trip.date >= aYearAgo && 
-      trip.status === 'approved') {
+    if (trip.date < today && trip.status === 'approved') {
       currentUser.pastTrips.push(trip);
     } else if (trip.date === today && trip.status === 'approved') {
       currentUser.currentTrips.push(trip);
@@ -168,21 +168,27 @@ const displayTripBoard = () => {
   pastTripBoard.innerHTML = `
     <h3>Past Trips</h3>
   `;
-  currentTripBoard.innerHTML = ``;
   upcomingTripBoard.innerHTML = `
     <h3>Upcoming Trips</h3>
   `;
   pendingTripBoard.innerHTML = `
     <h3>Pending Trips</h3>
   `;
+  if (currentUser.currentTrips) {
+    currentUser.currentTrips.forEach((trip) => {
+      currentTripBoard.innerHTML += `
+      <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <h3>${trip.destinationInfo.destination}</h3>
+      `
+    })
+  } else {
+    currentTripBoard.innerHTML = `
+    <h3>Current Trips</h3>
+    <p>You are not currently traveling! We can't wait to see where you'll go next.</p>
+  `;
+  }
   currentUser.pastTrips.forEach((trip) => {
     pastTripBoard.innerHTML += `
-    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
-    <h3>${trip.destinationInfo.destination}</h3>
-    `
-  })
-  currentUser.currentTrips.forEach((trip) => {
-    currentTripBoard.innerHTML += `
     <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
     <h3>${trip.destinationInfo.destination}</h3>
     `
@@ -240,8 +246,9 @@ const postNewTrip = () => {
     body: JSON.stringify(newTrip)
   }).then(response => response.json())
     .then(getCurrentUserTrips(), getTripCost())
+    // .then(addNewTripCost())
     .then(displayTripBoard())
-    .then(getAnnualTotal(), updateTotal())
+    .then(updateTotal())
     .catch(error => console.log(error))
 }
 
@@ -277,23 +284,13 @@ const showTripEstimate = () => {
 const logout = () => {
   loginPage.classList.remove('hidden');
   dashboard.classList.add('hidden')
-  loginPage.innerHTML = `
-    <form class="login-form">
-      <label for="login username">Username</label>
-      <input type="text" name="login username" id="loginUsername" 
-      label="login username">
-      <label for="login password">Password</label>
-      <input type="password" name="login password" id="loginPassword" 
-      label="login password">
-      <button class="login-button" id="loginButton">Hit the Road</button>
-    </form>
-  `
+  loginUsername.value = '';
+  loginPassword.value = '';
 }
 
 
 // Event Listeners 
 
-// window.addEventListener('load', fetchData);
 estimateTripTotalBtn.addEventListener('click', showTripEstimate);
 tripConfirmationBtn.addEventListener('click', submitNewTrip);
 loginBtn.addEventListener('click', (event) => fetchData(event));
