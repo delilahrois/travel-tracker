@@ -47,7 +47,6 @@ section {
   display: flex;
   flex-direction: row;
   height: 40%;
-  
 }
 
 .main-current-trip {
@@ -94,6 +93,10 @@ select, input {
 
 label {
   padding-left: 10px;
+}
+
+.hidden {
+  display: none;
 }
 
 

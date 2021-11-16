@@ -15,16 +15,17 @@ class DestinationRepository {
   }
 
   getDestinationByID(destinationID) {
-    this.destinationList.find((destination) => {
-      console.log(destination.id)
+    const result = this.destinationList.find((destination) => {
       return destination.id === destinationID;
     })
+    return result;
   }
 
   findDestinationID(destinationName) {
-    this.destinationList.find((place) => {
+    const newID = this.destinationList.find((place) => {
       return place.destination === destinationName;
-    }).id;
+    });
+    return newID.id;
   }
 }
 

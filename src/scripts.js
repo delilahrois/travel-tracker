@@ -35,19 +35,29 @@ const currentTripBoard = document.querySelector('#currentTripBoard');
 const pastTripBoard = document.querySelector('#pastTripBoard');
 const upcomingTripBoard = document.querySelector('#upcomingTripBoard');
 const pendingTripBoard = document.querySelector('#pendingTripBoard');
-const submitTripBtn = document.querySelector('#submitTripBtn');
+const estimateTripTotalBtn = document.querySelector('#estimateTripTotalBtn');
 const formDateInput = document.querySelector('#formDate');
 const formDurationInput = document.querySelector('#formDuration');
 const formNumberTravelersInput = document.querySelector('#formNumberTravelers');
-const formDestinationInput = document.querySelector('#formDestination').value;
+const destinationSelector = document.querySelector('#destinationSelector');
 const newTripForm = document.querySelector('#newTripForm');
+const loginBtn = document.querySelector('#loginButton');
+const loginUsername = document.querySelector('#loginUsername');
+const loginPassword = document.querySelector('#loginPassword');
+const dashboard = document.querySelector('#dashboard');
+const loginPage = document.querySelector('#loginPage');
+const newTripCostContainer = document.querySelector('#newTripCostContainer');
+const tripConfirmationBtn = document.querySelector('#tripConfirmationBtn');
+const logoutBtn = document.querySelector('#logoutBtn');
+const navBar = document.querySelector('#navBar');
 
 
 
 
 // Functions
 
-const fetchData = () => {
+const fetchData = (event) => {
+  event.preventDefault();
   Promise.all([ fetchTravelers(), fetchTrips(), fetchDestinations() ])
     .then(data => {
       return Promise.all(data.map(result => result.json()));
@@ -79,7 +89,17 @@ const getDestinations = (destinationData) => {
 }
 
 const getCurrentUser = () => {
-  currentUser = new Traveler(travelerRepo.getRandomTraveler());
+  let travelerID = loginUsername.value.split('r')[2];
+  let parsedID = parseInt(travelerID);
+  if (loginPassword.value === 'travel') {
+    currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
+    dashboard.classList.remove('hidden')
+    loginPage.classList.add('hidden')
+  } else {
+    alert('Invalid password. Try again.');
+    logout();
+  }
+  console.log(currentUser)
 }
 
 const updateGreeting = () => {
@@ -145,6 +165,16 @@ const sortTrips = () => {
 }
 
 const displayTripBoard = () => {
+  pastTripBoard.innerHTML = `
+    <h3>Past Trips</h3>
+  `;
+  currentTripBoard.innerHTML = ``;
+  upcomingTripBoard.innerHTML = `
+    <h3>Upcoming Trips</h3>
+  `;
+  pendingTripBoard.innerHTML = `
+    <h3>Pending Trips</h3>
+  `;
   currentUser.pastTrips.forEach((trip) => {
     pastTripBoard.innerHTML += `
     <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
@@ -180,19 +210,25 @@ const getNewID = () => {
 }
 
 const createNewTrip = () => {
+  let newDestinationID = destinationRepo
+    .findDestinationID(destinationSelector.value);
   newTrip = new Trip({
     id: getNewID(),
     userID: currentUser.id,
-    destinationID: 50,
+    destinationID: newDestinationID,
     travelers: parseInt(formNumberTravelersInput.value),
     date: dayjs(formDateInput.value).format('YYYY/MM/DD'),
     duration: parseInt(formDurationInput.value),
     status: 'pending',
     suggestedActivities: []
   })
-  currentUser.pendingTrips.push(newTrip);
-  tripRepo.tripList.push(newTrip);
-  console.log(newTrip)
+  if (!currentUser.pendingTrips.includes(newTrip)) {
+    currentUser.pendingTrips.push(newTrip);
+    tripRepo.tripList.push(newTrip);
+    tripRepo.currentUserTrips.push(newTrip);
+  } else {
+    console.log('error message')
+  }
 }
 
 const postNewTrip = () => {
@@ -203,19 +239,62 @@ const postNewTrip = () => {
     },
     body: JSON.stringify(newTrip)
   }).then(response => response.json())
-    .then(data => console.log(data))
-    .then(updateDOM())
+    .then(getCurrentUserTrips(), getTripCost())
+    .then(displayTripBoard())
+    .then(getAnnualTotal(), updateTotal())
     .catch(error => console.log(error))
 }
 
-
 const submitNewTrip = () => {
+  newTripCostContainer.classList.add('hidden');
+  tripConfirmationBtn.classList.add('hidden');
+  estimateTripTotalBtn.classList.remove('hidden');
   createNewTrip();
   postNewTrip();
+}
+
+const estimateNewTripTotal = () => {
+  let newDestinationID = destinationRepo
+    .findDestinationID(destinationSelector.value);
+  let givenDestination = destinationRepo.getDestinationByID(newDestinationID);
+  let estimatedCost = (((givenDestination.estimatedLodgingCostPerDay) * 
+    parseInt(formDurationInput.value)) + ((givenDestination
+    .estimatedFlightCostPerPerson) 
+    * parseInt(formNumberTravelersInput.value))) * 1.1;
+  return Math.round(estimatedCost);
+}
+
+const showTripEstimate = () => {
+  newTripCostContainer.classList.remove('hidden');
+  estimateTripTotalBtn.classList.add('hidden')
+  newTripCostContainer.innerHTML = `
+    <h3 class="new-trip-cost-header">Trip Estimate:</h3>
+    <p class="new-trip-cost">$${estimateNewTripTotal()}</p>
+  `
+  tripConfirmationBtn.classList.remove('hidden');
+}
+
+const logout = () => {
+  loginPage.classList.remove('hidden');
+  dashboard.classList.add('hidden')
+  loginPage.innerHTML = `
+    <form class="login-form">
+      <label for="login username">Username</label>
+      <input type="text" name="login username" id="loginUsername" 
+      label="login username">
+      <label for="login password">Password</label>
+      <input type="password" name="login password" id="loginPassword" 
+      label="login password">
+      <button class="login-button" id="loginButton">Hit the Road</button>
+    </form>
+  `
 }
 
 
 // Event Listeners 
 
-window.addEventListener('load', fetchData);
-submitTripBtn.addEventListener('click', submitNewTrip);
+// window.addEventListener('load', fetchData);
+estimateTripTotalBtn.addEventListener('click', showTripEstimate);
+tripConfirmationBtn.addEventListener('click', submitNewTrip);
+loginBtn.addEventListener('click', (event) => fetchData(event));
+logoutBtn.addEventListener('click', logout);

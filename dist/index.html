@@ -10,12 +10,19 @@
   <title>Travel Tracker</title>
 </head>
 <body>
-  <aside class="nav">
-    <button>Calendar</button>
-    <button>Map</button>
-    <button>Login / Logout</button>
+  <aside class="nav" id="navBar">
+    <button id="logoutBtn">Logout</button>
   </aside>
-  <main>
+  <section class="login-page" id="loginPage">
+    <form class="login-form">
+      <label for="login username">Username</label>
+      <input type="text" name="login username" id="loginUsername" label="login username">
+      <label for="login password">Password</label>
+      <input type="password" name="login password" id="loginPassword" label="login password">
+      <button class="login-button" id="loginButton">Hit the Road</button>
+    </form>
+  </section>
+  <main class="dashboard hidden" id="dashboard">
     <header>
       <div class="header-container">
         <h1 id="header-greeting">Greetings, User!</h1>
@@ -34,9 +41,8 @@
       <label for="numberTravelers">Number of Travelers</label>
       <input type="number" min="1" max="100" name="numberTravelers" id="formNumberTravelers" label="number of travelers">
       <form class="new-trip-form" id="newTripForm">
-        <input type="radio" label="Lima, Peru"
-        <!-- <label for="destination">Choose Your Destination</label>
-        <select name="form destination" id="formDestination">
+        <label for="destination">Choose Your Destination</label>
+        <select name="destination selector" id="destinationSelector">
           <option>
             Choose Your Next Destination
           </option>
@@ -58,9 +64,14 @@
           <option value="New York, New York">
             New York, New York
           </option>
-        </select> -->
+        </select>
+        <div class="new-trip-cost-container hidden" id="newTripCostContainer">
+          <h3 class="new-trip-cost-header">Trip Estimate:</h3>
+  
+        </div>
       </form>
-      <button id="submitTripBtn">Submit Trip</button>
+      <button id="estimateTripTotalBtn">See Trip Estimate</button>
+      <button class="hidden" id="tripConfirmationBtn">Confirm</button>
     </section>
     <section class="main-current-trip">
       <article class="main-current-trip-board" id="currentTripBoard">
