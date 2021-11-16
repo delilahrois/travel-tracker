@@ -1,6 +1,7 @@
 import chai from 'chai';
 const expect = chai.expect;
 const Traveler = require('../src/traveler');
+const TripRepository = require('../src/tripRepo');
 
 describe('Traveler', () => {
 
@@ -44,8 +45,8 @@ describe('Traveler', () => {
     expect(traveler1.travelerType).to.equal('foodie');
   });
 
-  it.skip('should be able to calculate their total spent on trips this year', () => {
+  it('should be able to return just the travelers first name', () => {
 
-    expect(traveler1.calculateTripsTotal()).to.equal();
+    expect(traveler1.getFirstName()).to.equal('Sheila');
   });
 });

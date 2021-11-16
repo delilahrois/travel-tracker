@@ -84,8 +84,13 @@ describe('TravelerRepository', () => {
     expect(travelerRepo.findTraveler(3).name).to.equal('Sibby Dawidowitsch');
   });
 
-  it('should be able to hold travelers in an array', () => {
+  it('should be able to hold travelers in a list', () => {
 
     expect(travelerRepo.travelerList).to.be.an('array');
+  });
+
+  it('should be able to get a random traveler from the list', () => {
+
+    expect(travelerRepo.getRandomTraveler()).to.be.an.instanceOf(Traveler);
   });
 });
