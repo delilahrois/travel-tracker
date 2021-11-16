@@ -35,7 +35,6 @@ const formDateInput = document.querySelector('#formDate');
 const formDurationInput = document.querySelector('#formDuration');
 const formNumberTravelersInput = document.querySelector('#formNumberTravelers');
 const destinationSelector = document.querySelector('#destinationSelector');
-// const newTripForm = document.querySelector('#newTripForm');
 const loginBtn = document.querySelector('#loginButton');
 const loginUsername = document.querySelector('#loginUsername');
 const loginPassword = document.querySelector('#loginPassword');
@@ -249,7 +248,7 @@ const createNewTrip = () => {
     tripRepo.tripList.push(newTrip);
     tripRepo.currentUserTrips.push(newTrip);
   } else {
-    console.log('error message')
+    console.log('Error')
   }
 }
 
@@ -287,13 +286,18 @@ const estimateNewTripTotal = () => {
 }
 
 const showTripEstimate = () => {
-  newTripCostContainer.classList.remove('hidden');
-  estimateTripTotalBtn.classList.add('hidden')
-  newTripCostContainer.innerHTML = `
+  if (!formDateInput.value || !formDurationInput.value || 
+    !formNumberTravelersInput.value || !destinationSelector.value) {
+    alert('You need to make a selection.');
+  } else {
+    newTripCostContainer.classList.remove('hidden');
+    estimateTripTotalBtn.classList.add('hidden')
+    newTripCostContainer.innerHTML = `
     <h3 class="new-trip-cost-header">Trip Estimate:</h3>
     <p class="new-trip-cost">$${estimateNewTripTotal()}</p>
   `
-  tripConfirmationBtn.classList.remove('hidden');
+    tripConfirmationBtn.classList.remove('hidden');
+  }
 }
 
 const logout = () => {

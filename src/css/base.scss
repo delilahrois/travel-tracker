@@ -16,7 +16,6 @@ body {
 }
 
 aside {
-  border: 2px solid orange;
   justify-content: center;
   justify-items: flex-start;
   width: 10%;
@@ -24,7 +23,6 @@ aside {
 }
 
 header {
-  border: 2px solid red;
   height: 20%;
   display: flex;
   justify-content: center;
@@ -36,18 +34,15 @@ header > div > img {
 }
 
 main {
-  border: 2px solid blue;
   width: 90%;
   margin-right: 20px;
 }
 
 section {
-  border: 2px solid green;
   height: 15%;
 }
 
 .main-trips-board {
-  border: 2px solid yellow;
   display: flex;
   flex-direction: row;
   height: 40%;
@@ -65,7 +60,6 @@ section {
 }
 
 .main-current-trip {
-  border: 2px solid magenta;
   height: 30%;
   display: flex;
   justify-content: center;
@@ -93,7 +87,6 @@ section {
 }
 
 article {
-  border: 2px solid pink;
   width: 33.33%;
   margin-bottom: 20px;
   padding-left: 20px;
