@@ -10,23 +10,23 @@
   <title>Travel Tracker</title>
 </head>
 <body>
-  <aside class="nav" id="navBar">
+  <aside class="nav hidden" id="navBar">
     <button class="logoutBtn hidden" id="logoutBtn">Logout</button>
   </aside>
   <section class="login-page" id="loginPage">
     <form class="login-form">
-      <label for="login username">Username</label>
-      <input type="text" name="login username" id="loginUsername" label="login username">
-      <label for="login password">Password</label>
-      <input type="password" name="login password" id="loginPassword" label="login password">
+      <label for="loginUsername">Username</label>
+      <input type="text" id="loginUsername">
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword">
       <button class="login-button" id="loginButton">Hit the Road</button>
     </form>
   </section>
   <main class="dashboard hidden" id="dashboard">
     <header>
       <div class="header-container">
-        <h1 id="header-greeting">Greetings, User!</h1>
-        <h2 id="header-message">You have spent $$$ on trips this year.</h2>
+        <h1 class="header-greeting" id="headerGreeting">Greetings, User!</h1>
+        <h2 class="header-message" id="headerMessage">You have spent $$$ on trips this year.</h2>
       </div>
       <div>
         <img src="https://cdn-icons-png.flaticon.com/512/2798/2798112.png" alt="company logo">
@@ -35,14 +35,13 @@
     <section type="form" class="main-form">
       <h2>Where do you want to go?</h2>
       <label for="date">Departure Date</label>
-      <input type="date" name="date" id="formDate" label="departure date">
+      <input type="date" id="formDate" min="${today}">
       <label for="duration">Trip Duration</label>
       <input type="number" min="1" max="365" name="duration" id="formDuration" label="duration">
       <label for="numberTravelers">Number of Travelers</label>
       <input type="number" min="1" max="100" name="numberTravelers" id="formNumberTravelers" label="number of travelers">
-      <form class="new-trip-form" id="newTripForm">
-        <label for="destination">Choose Your Destination</label>
-        <select name="destination selector" id="destinationSelector">
+      <form class="new-trip-form" id="newTripForm" label="new trip form">
+        <select label="destination selector" id="destinationSelector">
           <option>
             Choose Your Next Destination
           </option>
@@ -74,19 +73,18 @@
     </section>
     <section class="main-current-trip">
       <article class="main-current-trip-board" id="currentTripBoard">
-        <h3>Current Trips</h3>
-        <p>You are not currently traveling! We can't wait to see where you'll go next.</p>
+        <p class="current-trip-message">You are not currently traveling! We can't wait to see where you'll go next.</p>
       </article>
     </section>
     <section class="main-trips-board">
       <article class="main-trips-board-destination" id="pastTripBoard">
-        <h3>Past Trips</h3>
+        <h2 class="trip-board-header">Past Trips</h2>
       </article>
       <article class="main-trips-board-destination" id="upcomingTripBoard">
-        <h3>Upcoming Trips</h3>
+        <h2 class="trip-board-header">Upcoming Trips</h2>
       </article>
       <article class="main-trips-board-destination" id="pendingTripBoard">
-        <h3>Pending Trips</h3>
+        <h2 class="trip-board-header">Pending Trips</h2>
       </article>
     </section>
   </main>

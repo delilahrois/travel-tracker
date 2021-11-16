@@ -7,18 +7,13 @@ import Traveler from './traveler';
 import Trip from './trip';
 import TravelerRepository from './travelerRepo';
 import TripRepository from './tripRepo';
-import Destination from './destination';
 import DestinationRepository from './destinationRepo';
 import dayjs from 'dayjs';
 
-// An example of how you tell webpack to use an image 
-// (also need to link to it in the index.html)
-// import './images/turing-logo.png'
-
-
 // Global Variables
 
-const today = '2021/11/15';
+const today = dayjs().format('YYYY/MM/DD');
+console.log(today)
 let currentUser;
 let travelerRepo;
 let tripRepo;
@@ -29,8 +24,8 @@ let newTrip;
 
 // Query Selectors
 
-const headerGreeting = document.querySelector('#header-greeting');
-const headerMessage = document.querySelector('#header-message');
+const headerGreeting = document.querySelector('#headerGreeting');
+const headerMessage = document.querySelector('#headerMessage');
 const currentTripBoard = document.querySelector('#currentTripBoard');
 const pastTripBoard = document.querySelector('#pastTripBoard');
 const upcomingTripBoard = document.querySelector('#upcomingTripBoard');
@@ -40,7 +35,7 @@ const formDateInput = document.querySelector('#formDate');
 const formDurationInput = document.querySelector('#formDuration');
 const formNumberTravelersInput = document.querySelector('#formNumberTravelers');
 const destinationSelector = document.querySelector('#destinationSelector');
-const newTripForm = document.querySelector('#newTripForm');
+// const newTripForm = document.querySelector('#newTripForm');
 const loginBtn = document.querySelector('#loginButton');
 const loginUsername = document.querySelector('#loginUsername');
 const loginPassword = document.querySelector('#loginPassword');
@@ -65,10 +60,9 @@ const fetchData = (event) => {
       getTravelers(data[0].travelers)
       getTrips(data[1].trips);
       getDestinations(data[2].destinations);
-      updateDOM();
-    })
+    }).then(updateDOM())
     .catch(error => {
-      console.log(error)
+      alert('Error connecting to server. Please try again.', error)
     })
 }
 
@@ -135,8 +129,7 @@ const getAnnualTotal = () => {
 }
 
 const updateTotal = () => {
-  headerMessage.innerText = `You have spent 
-  $${currentUser.totalSpentOnTripsThisYear} on trips this year.`;
+  headerMessage.innerText = `You have spent $${currentUser.totalSpentOnTripsThisYear} on trips this year.`;
 }
 
 const updateDOM = () => {
@@ -148,6 +141,7 @@ const updateDOM = () => {
   updateTotal();
   sortTrips();
   displayTripBoard();
+  populateSelect();
 }
 
 const sortTrips = () => {
@@ -164,15 +158,27 @@ const sortTrips = () => {
   })
 }
 
+const populateSelect = () => {
+  destinationSelector.innerHTML = `
+    <option>Choose Your Next Destination</option>
+  `;
+  destinationRepo.destinationList.forEach((place) => {
+    destinationSelector.innerHTML += `
+      <option value="${place.destination}">${place.destination}</option>
+    `;
+  })
+}
+
 const displayTripBoard = () => {
+  navBar.classList.remove('hidden');
   pastTripBoard.innerHTML = `
-    <h3>Past Trips</h3>
+    <h2 class="trip-board-header">Past Trips</h2>
   `;
   upcomingTripBoard.innerHTML = `
-    <h3>Upcoming Trips</h3>
+    <h2 class="trip-board-header">Upcoming Trips</h2>
   `;
   pendingTripBoard.innerHTML = `
-    <h3>Pending Trips</h3>
+    <h2 class="trip-board-header">Pending Trips</h2>
   `;
   if (currentUser.currentTrips) {
     currentUser.currentTrips.forEach((trip) => {
@@ -180,11 +186,13 @@ const displayTripBoard = () => {
       <img src="${trip.destinationInfo.image}" 
       alt="${trip.destinationInfo.alt}">
       <h3>${trip.destinationInfo.destination}</h3>
+      <p>Status: ${trip.status}</p>
+      <p>Cost: $${trip.cost}</p>
       `
     })
   } else {
     currentTripBoard.innerHTML = `
-    <h3>Current Trips</h3>
+    <h2 class="trip-board-header">Current Trips</h2>
     <p>You are not currently traveling! We can't wait to 
     see where you'll go next.</p>
   `;
@@ -193,18 +201,24 @@ const displayTripBoard = () => {
     pastTripBoard.innerHTML += `
     <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
     <h3>${trip.destinationInfo.destination}</h3>
+    <p>Status: ${trip.status}</p>
+    <p>Cost: $${trip.cost}</p>
     `
   })
   currentUser.upcomingTrips.forEach((trip) => {
     upcomingTripBoard.innerHTML += `
     <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
     <h3>${trip.destinationInfo.destination}</h3>
+    <p>Status: ${trip.status}</p>
+    <p>Cost: $${trip.cost}</p>
     `
   })
   currentUser.pendingTrips.forEach((trip) => {
     pendingTripBoard.innerHTML += `
     <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
     <h3>${trip.destinationInfo.destination}</h3>
+    <p>Status: ${trip.status}</p>
+    <p>Cost: $${trip.cost}</p>
     `
   })
 }
@@ -248,10 +262,9 @@ const postNewTrip = () => {
     body: JSON.stringify(newTrip)
   }).then(response => response.json())
     .then(getCurrentUserTrips(), getTripCost())
-    // .then(addNewTripCost())
     .then(displayTripBoard())
     .then(updateTotal())
-    .catch(error => console.log(error))
+    .catch(error => alert('Error. Your trip has not been accepted.', error))
 }
 
 const submitNewTrip = () => {
@@ -287,6 +300,7 @@ const logout = () => {
   loginPage.classList.remove('hidden');
   dashboard.classList.add('hidden')
   logoutBtn.classList.add('hidden');
+  navBar.classList.add('hidden');
   loginUsername.value = '';
   loginPassword.value = '';
 }
