@@ -10,17 +10,17 @@
   <title>Travel Tracker</title>
 </head>
 <body>
-  <section class="login-page hidden" id="loginPage">
+  <section class="login-page" id="loginPage">
     <form class="login-form">
-      <label for="loginUsername">Username</label>
-      <input type="text" id="loginUsername">
-      <label for="loginPassword">Password</label>
-      <input type="password" id="loginPassword">
+      <label for="loginUsername"></label>
+      <input type="text" placeholder="Username" id="loginUsername">
+      <label for="loginPassword"></label>
+      <input type="password" placeholder="Password" id="loginPassword">
       <button class="login-button" id="loginButton" label="loginButton">Hit the Road</button>
     </form>
   </section>
-  <main class="dashboard" id="dashboard">
-    <button class="logoutBtn" id="logoutBtn">Logout</button>
+  <main class="dashboard hidden" id="dashboard">
+    <button class="logoutBtn hidden" id="logoutBtn">Logout</button>
     <header>
       <div class="header-container">
         <h1 class="header-greeting" id="headerGreeting">Greetings, User!</h1>
@@ -30,36 +30,20 @@
         <img class="header-icon" src="https://cdn-icons-png.flaticon.com/512/2798/2798112.png" alt="company logo">
       </div>
     </header>
-    <section type="form" class="main-form">
+    <div class="header-container">
       <h2>Where do you want to go?</h2>
-      <label for="formDate">Departure Date</label>
+    </div>
+    <section type="form" class="main-form">
+      <label for="formDate" class="viewed-label">Departure Date</label>
       <input type="date" id="formDate" min="${today}">
-      <label for="formDuration">Trip Duration</label>
+      <label for="formDuration" class="viewed-label">Trip Duration</label>
       <input type="number" min="1" max="365" id="formDuration">
-      <label for="formNumberTravelers">Number of Travelers</label>
+      <label for="formNumberTravelers" class="viewed-label">Number of Travelers</label>
       <input type="number" min="1" max="100" id="formNumberTravelers">
       <form class="new-trip-form" id="newTripForm" label="new trip form">
-        <select label="destination selector" id="destinationSelector">
+        <select label="destination selector" class="destination-selector" id="destinationSelector">
           <option>
             Choose Your Next Destination
-          </option>
-          <option value="Lima, Peru">
-            Lima, Peru
-          </option> 
-          <option value="San Juan, Puerto Rico">
-            San Juan, Puerto Rico
-          </option>
-          <option value="Marrakesh, Morocco">
-            Marrakesh, Morocco
-          </option>
-          <option value="Cartagena, Colombia">
-            Cartagena, Colombia
-          </option>
-          <option value="Tokyo, Japan">
-            Tokyo, Japan
-          </option>
-          <option value="New York, New York">
-            New York, New York
           </option>
         </select>
         <div class="new-trip-cost-container hidden" id="newTripCostContainer">
@@ -71,18 +55,26 @@
     </section>
     <section class="main-current-trip">
       <article class="main-current-trip-board" id="currentTripBoard">
-        <p class="current-trip-message">You are not currently traveling! We can't wait to see where you'll go next.</p>
+        <div class="destination-container">
+          <p class="current-trip-message">You are not currently traveling! We can't wait to see where you'll go next.</p>
+        </div>
       </article>
     </section>
     <section class="main-trips-board">
       <article class="main-trips-board-destination" id="pastTripBoard">
-        <h2 class="trip-board-header">Past Trips</h2>
+        <div class="destination-container">
+          <h2 class="trip-board-header">Past Trips</h2>
+        </div>
       </article>
       <article class="main-trips-board-destination" id="upcomingTripBoard">
-        <h2 class="trip-board-header">Upcoming Trips</h2>
+        <div class="destination-container">
+          <h2 class="trip-board-header">Upcoming Trips</h2>
+        </div>
       </article>
       <article class="main-trips-board-destination" id="pendingTripBoard">
-        <h2 class="trip-board-header">Pending Trips</h2>
+        <div class="destination-container">
+          <h2 class="trip-board-header">Pending Trips</h2>
+        </div>
       </article>
     </section>
   </main>

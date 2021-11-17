@@ -4,10 +4,16 @@
 
 // body
 
-body {
-  background: $primary-background;
-  color: $header-text-color;
+html {
+  background-image: $background-img;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   margin: 0 auto;
+}
+
+body {
+  color: $header-text-color;
   height: 100%;
   width: 100%;
   @include centered();
@@ -23,13 +29,6 @@ body {
   padding-top: 20%;
 }
 
-// main
-
-main {
-  width: 90%;
-  margin-right: $more-space;
-}
-
 // nav bar
 
 aside {
@@ -43,6 +42,7 @@ header {
   height: 20%;
   padding-bottom: $more-space;
   @include centered();
+  padding-left: $more-space;
 }
 
 .header-container {
@@ -65,6 +65,11 @@ header {
 
 .new-trip-form {
   padding: $padding;
+}
+
+.new-trip-cost-container {
+  background-color: $card-background;
+  margin: $padding;
 }
 
 // trip board
@@ -101,6 +106,17 @@ header {
   margin-bottom: $padding;
 }
 
+.destination-container {
+  @include centered();
+  flex-direction: column;
+  align-items: center;
+  background-color: $card-background;
+  border-radius: 8px;
+  padding: $padding;
+  margin: $padding;
+  // text-shadow: $shadow;
+}
+
 .trip-board-img {
   height: 140px;
   width: 200px;
@@ -116,8 +132,9 @@ button {
   border: 0px;
   border-radius: 5px;
   padding: 5px;
+  margin-left: $padding;
   font-family: $font;
-  font-size: large;
+  font-size: 1vw;
 }
 
 
@@ -131,14 +148,20 @@ h2 {
 
 
 
-select, input {
+.destination-selector, input {
   font-family: $font;
   padding: 5px;
   padding-right: $padding;
+  margin-right: $padding;
+  border-radius: 5px;
+  border: 0px;
 }
 
-label {
-  padding-left: 10px;
+.viewed-label {
+  padding: 6.5px;
+  margin-right: 10px;
+  background-color: $card-background;
+  border-radius: 5px;
 }
 
 .hidden {
@@ -153,6 +176,12 @@ label {
 .current-trip-message {
   font-size: $smaller;
 }
+
+// input {
+//   margin-right: $padding;
+//   border-radius: 5px;
+//   border: 0px;
+// }
 
 
 

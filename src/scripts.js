@@ -1,7 +1,7 @@
 // Imports 
 
 import './css/base.scss';
-import { fetchTravelers, fetchSingleTraveler, fetchTrips, 
+import { fetchTravelers, fetchTrips, 
   fetchDestinations } from './apiCalls';
 import Traveler from './traveler';
 import Trip from './trip';
@@ -49,8 +49,8 @@ const logoutBtn = document.querySelector('#logoutBtn');
 
 // Functions
 
-const fetchData = () => {
-  // event.preventDefault();
+const fetchData = (event) => {
+  event.preventDefault();
   Promise.all([ fetchTravelers(), fetchTrips(), fetchDestinations() ])
     .then(data => {
       return Promise.all(data.map(result => result.json()));
@@ -81,22 +81,19 @@ const getDestinations = (destinationData) => {
   destinationRepo.createDestinationList();
 }
 
-// const getCurrentUser = () => {
-//   currentUser = new Traveler(travelerRepo.findTraveler(44))
-//   console.log(currentUser)
-//   console.log(travelerRepo)
-//   // let travelerID = loginUsername.value.split('r')[2];
-//   // let parsedID = parseInt(travelerID);
-//   // if (loginPassword.value === 'travel') {
-//   //   currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
-//   //   dashboard.classList.remove('hidden');
-//   //   loginPage.classList.add('hidden');
-//   //   logoutBtn.classList.remove('hidden');
-//   // } else {
-//   //   alert('Invalid password. Try again.');
-//   //   logout();
-//   // }
-// }
+const getCurrentUser = () => {
+  let travelerID = loginUsername.value.split('r')[2];
+  let parsedID = parseInt(travelerID);
+  if (loginPassword.value === 'travel') {
+    currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
+    dashboard.classList.remove('hidden');
+    loginPage.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
+  } else {
+    alert('Invalid password. Try again.');
+    logout();
+  }
+}
 
 const updateGreeting = () => {
   headerGreeting.innerText = `Greetings, ${currentUser.getFirstName()}!`;
@@ -135,8 +132,7 @@ const updateTotal = () => {
 }
 
 const updateDOM = () => {
-  currentUser = new Traveler(travelerRepo.travelerList[17])
-  // getCurrentUser();
+  getCurrentUser();
   updateGreeting();
   getCurrentUserTrips();
   getTripCost();
@@ -185,42 +181,51 @@ const displayTripBoard = () => {
   if (currentUser.currentTrips) {
     currentUser.currentTrips.forEach((trip) => {
       currentTripBoard.innerHTML += `
-      <img class="trip-board-img" src="${trip.destinationInfo.image}" 
-      alt="${trip.destinationInfo.alt}">
-      <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
-      <p class="trip-text">Status: ${trip.status}</p>
-      <p class="trip-text">Cost: $${trip.cost}</p>
+      <div class="destination-container">
+        <img class="trip-board-img" src="${trip.destinationInfo.image}" 
+        alt="${trip.destinationInfo.alt}">
+        <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+        <p class="trip-text">Status: ${trip.status}</p>
+        <p class="trip-text">Cost: $${trip.cost}</p>
+      </div>
       `
     })
   } else {
     currentTripBoard.innerHTML = `
-    <h2 class="trip-board-header">Current Trips</h2>
-    <p class="trip-text">You are not currently traveling! We can't wait to 
-    see where you'll go next.</p>
+    <div class="destination-container">
+      <h2 class="trip-board-header">Current Trips</h2>
+      <p class="trip-text">You are not currently traveling! We can't wait to see where you'll go next.</p>
+    </div>
   `;
   }
   currentUser.pastTrips.forEach((trip) => {
     pastTripBoard.innerHTML += `
-    <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
-    <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
-    <p class="trip-text">Status: ${trip.status}</p>
-    <p class="trip-text">Cost: $${trip.cost}</p>
+    <div class="destination-container">
+      <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+      <p class="trip-text">Status: ${trip.status}</p>
+      <p class="trip-text">Cost: $${trip.cost}</p>
+    </div>
     `
   })
   currentUser.upcomingTrips.forEach((trip) => {
     upcomingTripBoard.innerHTML += `
-    <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
-    <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
-    <p class="trip-text">Status: ${trip.status}</p>
-    <p class="trip-text">Cost: $${trip.cost}</p>
+    <div class="destination-container">
+      <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+      <p class="trip-text">Status: ${trip.status}</p>
+      <p class="trip-text">Cost: $${trip.cost}</p>
+    </div>
     `
   })
   currentUser.pendingTrips.forEach((trip) => {
     pendingTripBoard.innerHTML += `
-    <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
-    <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
-    <p class="trip-text">Status: ${trip.status}</p>
-    <p class="trip-text">Cost: $${trip.cost}</p>
+    <div class="destination-container">
+      <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+      <p class="trip-text">Status: ${trip.status}</p>
+      <p class="trip-text">Cost: $${trip.cost}</p>
+    </div>
     `
   })
 }
@@ -314,8 +319,7 @@ const logout = () => {
 
 // Event Listeners 
 
-window.addEventListener('load', fetchData)
 estimateTripTotalBtn.addEventListener('click', showTripEstimate);
 tripConfirmationBtn.addEventListener('click', submitNewTrip);
-// loginBtn.addEventListener('click', (event) => fetchData(event));
+loginBtn.addEventListener('click', (event) => fetchData(event));
 logoutBtn.addEventListener('click', logout);
