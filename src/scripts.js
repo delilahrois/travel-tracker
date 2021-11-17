@@ -274,7 +274,7 @@ const postNewTrip = () => {
   }).then(response => response.json())
     .then(getCurrentUserTrips(), getTripCost())
     .then(displayTripBoard())
-    .then(updateTotal(), console.log(newTrip))
+    .then(updateTotal())
     .catch(error => alert('Error. Your trip has not been accepted.', error))
 }
 
