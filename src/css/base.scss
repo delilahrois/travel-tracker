@@ -2,76 +2,89 @@
 @import '_reset';
 @import '_mixins';
 
+// body
+
 body {
   background: $primary-background;
   color: $header-text-color;
   margin: 0 auto;
   height: 100%;
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  @include centered();
   font-family: $font;
-  justify-content: center;
   align-items: center;
 }
 
-aside {
-  justify-content: center;
-  justify-items: flex-start;
-  width: 10%;
-  display: flex;
+// login page
+
+.login-page {
+  @include centered();
+  align-items: center;
+  padding-top: 20%;
 }
 
-header {
-  height: 20%;
-  display: flex;
-  justify-content: center;
-  padding: 20px;
-}
-
-header > div > img {
-  height: 200px;
-}
+// main
 
 main {
   width: 90%;
-  margin-right: 20px;
+  margin-right: $more-space;
 }
 
-section {
-  height: 15%;
+// nav bar
+
+aside {
+  @include centered();
+  width: 5%;
 }
+
+// header
+
+header {
+  height: 20%;
+  padding-bottom: $more-space;
+  @include centered();
+}
+
+.header-container {
+  @include centered();
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-greeting {
+  font-size: $header;
+  padding-bottom: $more-space;
+}
+
+.header-icon {
+  height: 200px;
+  padding-left: $more-space;
+}
+
+// new trip form
+
+.new-trip-form {
+  padding: $padding;
+}
+
+// trip board
 
 .main-trips-board {
-  display: flex;
+  @include centered();
   flex-direction: row;
   height: 40%;
 }
 
-.main-trips-board-destination {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px;
-}
-
-.new-trip-form {
-  padding: 20px;
-}
-
 .main-current-trip {
+  @include centered();
   height: 30%;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: $padding;
 }
 
 .main-current-trip-board, .main-form {
-  display: flex;
-  justify-content: center;
+  @include centered();
   align-items: center;
-
 }
 
 .main-current-trip-board {
@@ -79,22 +92,24 @@ section {
   width: 100%;
 }
 
-.login-page {
+.main-trips-board-destination {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  padding-top: 20%;
-}
-
-article {
+  padding: $padding;
   width: 33.33%;
-  margin-bottom: 20px;
-  padding-left: 20px;
+  margin-bottom: $padding;
 }
 
-p {
+.trip-board-img {
+  height: 140px;
+  width: 200px;
   padding: 10px;
-  font-size: 1vw;
+}
+
+.trip-text {
+  padding: 10px;
+  font-size: $smallest;
 }
 
 button {
@@ -105,29 +120,21 @@ button {
   font-size: large;
 }
 
-article > img {
-  height: 140px;
-  width: 200px;
-  padding: 10px;
-}
-
-h1 {
-  font-size: 4vw;
-  padding-bottom: 40px;
-}
 
 h2 {
-  font-size: 2vw;
+  font-size: $subheader;
 }
 
-h3 {
-  font-size: 1.2vw;
+.logoutBtn {
+  margin-top: $more-space;
 }
+
+
 
 select, input {
   font-family: $font;
   padding: 5px;
-  padding-right: 20px;
+  padding-right: $padding;
 }
 
 label {
@@ -139,12 +146,12 @@ label {
 }
 
 .trip-board-header {
-  padding: 20px;
-  font-size: 2vw;
+  padding: $padding;
+  font-size: $subheader;
 }
 
 .current-trip-message {
-  font-size: 1.8vw;
+  font-size: $smaller;
 }
 
 

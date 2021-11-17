@@ -10,36 +10,34 @@
   <title>Travel Tracker</title>
 </head>
 <body>
-  <aside class="nav hidden" id="navBar">
-    <button class="logoutBtn hidden" id="logoutBtn">Logout</button>
-  </aside>
-  <section class="login-page" id="loginPage">
+  <section class="login-page hidden" id="loginPage">
     <form class="login-form">
       <label for="loginUsername">Username</label>
       <input type="text" id="loginUsername">
       <label for="loginPassword">Password</label>
       <input type="password" id="loginPassword">
-      <button class="login-button" id="loginButton">Hit the Road</button>
+      <button class="login-button" id="loginButton" label="loginButton">Hit the Road</button>
     </form>
   </section>
-  <main class="dashboard hidden" id="dashboard">
+  <main class="dashboard" id="dashboard">
+    <button class="logoutBtn" id="logoutBtn">Logout</button>
     <header>
       <div class="header-container">
         <h1 class="header-greeting" id="headerGreeting">Greetings, User!</h1>
         <h2 class="header-message" id="headerMessage">You have spent $$$ on trips this year.</h2>
       </div>
       <div>
-        <img src="https://cdn-icons-png.flaticon.com/512/2798/2798112.png" alt="company logo">
+        <img class="header-icon" src="https://cdn-icons-png.flaticon.com/512/2798/2798112.png" alt="company logo">
       </div>
     </header>
     <section type="form" class="main-form">
       <h2>Where do you want to go?</h2>
-      <label for="date">Departure Date</label>
+      <label for="formDate">Departure Date</label>
       <input type="date" id="formDate" min="${today}">
-      <label for="duration">Trip Duration</label>
-      <input type="number" min="1" max="365" name="duration" id="formDuration" label="duration">
-      <label for="numberTravelers">Number of Travelers</label>
-      <input type="number" min="1" max="100" name="numberTravelers" id="formNumberTravelers" label="number of travelers">
+      <label for="formDuration">Trip Duration</label>
+      <input type="number" min="1" max="365" id="formDuration">
+      <label for="formNumberTravelers">Number of Travelers</label>
+      <input type="number" min="1" max="100" id="formNumberTravelers">
       <form class="new-trip-form" id="newTripForm" label="new trip form">
         <select label="destination selector" id="destinationSelector">
           <option>

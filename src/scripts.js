@@ -43,23 +43,23 @@ const loginPage = document.querySelector('#loginPage');
 const newTripCostContainer = document.querySelector('#newTripCostContainer');
 const tripConfirmationBtn = document.querySelector('#tripConfirmationBtn');
 const logoutBtn = document.querySelector('#logoutBtn');
-const navBar = document.querySelector('#navBar');
 
 
 
 
 // Functions
 
-const fetchData = (event) => {
-  event.preventDefault();
+const fetchData = () => {
+  // event.preventDefault();
   Promise.all([ fetchTravelers(), fetchTrips(), fetchDestinations() ])
     .then(data => {
       return Promise.all(data.map(result => result.json()));
     }).then(data => {
       getTravelers(data[0].travelers)
       getTrips(data[1].trips);
-      getDestinations(data[2].destinations);
-    }).then(updateDOM())
+      getDestinations(data[2].destinations)
+      updateDOM()
+    })
     .catch(error => {
       alert('Error connecting to server. Please try again.', error)
     })
@@ -81,19 +81,22 @@ const getDestinations = (destinationData) => {
   destinationRepo.createDestinationList();
 }
 
-const getCurrentUser = () => {
-  let travelerID = loginUsername.value.split('r')[2];
-  let parsedID = parseInt(travelerID);
-  if (loginPassword.value === 'travel') {
-    currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
-    dashboard.classList.remove('hidden');
-    loginPage.classList.add('hidden');
-    logoutBtn.classList.remove('hidden');
-  } else {
-    alert('Invalid password. Try again.');
-    logout();
-  }
-}
+// const getCurrentUser = () => {
+//   currentUser = new Traveler(travelerRepo.findTraveler(44))
+//   console.log(currentUser)
+//   console.log(travelerRepo)
+//   // let travelerID = loginUsername.value.split('r')[2];
+//   // let parsedID = parseInt(travelerID);
+//   // if (loginPassword.value === 'travel') {
+//   //   currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
+//   //   dashboard.classList.remove('hidden');
+//   //   loginPage.classList.add('hidden');
+//   //   logoutBtn.classList.remove('hidden');
+//   // } else {
+//   //   alert('Invalid password. Try again.');
+//   //   logout();
+//   // }
+// }
 
 const updateGreeting = () => {
   headerGreeting.innerText = `Greetings, ${currentUser.getFirstName()}!`;
@@ -132,7 +135,8 @@ const updateTotal = () => {
 }
 
 const updateDOM = () => {
-  getCurrentUser();
+  currentUser = new Traveler(travelerRepo.travelerList[17])
+  // getCurrentUser();
   updateGreeting();
   getCurrentUserTrips();
   getTripCost();
@@ -169,7 +173,6 @@ const populateSelect = () => {
 }
 
 const displayTripBoard = () => {
-  navBar.classList.remove('hidden');
   pastTripBoard.innerHTML = `
     <h2 class="trip-board-header">Past Trips</h2>
   `;
@@ -182,42 +185,42 @@ const displayTripBoard = () => {
   if (currentUser.currentTrips) {
     currentUser.currentTrips.forEach((trip) => {
       currentTripBoard.innerHTML += `
-      <img src="${trip.destinationInfo.image}" 
+      <img class="trip-board-img" src="${trip.destinationInfo.image}" 
       alt="${trip.destinationInfo.alt}">
-      <h3>${trip.destinationInfo.destination}</h3>
-      <p>Status: ${trip.status}</p>
-      <p>Cost: $${trip.cost}</p>
+      <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+      <p class="trip-text">Status: ${trip.status}</p>
+      <p class="trip-text">Cost: $${trip.cost}</p>
       `
     })
   } else {
     currentTripBoard.innerHTML = `
     <h2 class="trip-board-header">Current Trips</h2>
-    <p>You are not currently traveling! We can't wait to 
+    <p class="trip-text">You are not currently traveling! We can't wait to 
     see where you'll go next.</p>
   `;
   }
   currentUser.pastTrips.forEach((trip) => {
     pastTripBoard.innerHTML += `
-    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
-    <h3>${trip.destinationInfo.destination}</h3>
-    <p>Status: ${trip.status}</p>
-    <p>Cost: $${trip.cost}</p>
+    <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+    <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+    <p class="trip-text">Status: ${trip.status}</p>
+    <p class="trip-text">Cost: $${trip.cost}</p>
     `
   })
   currentUser.upcomingTrips.forEach((trip) => {
     upcomingTripBoard.innerHTML += `
-    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
-    <h3>${trip.destinationInfo.destination}</h3>
-    <p>Status: ${trip.status}</p>
-    <p>Cost: $${trip.cost}</p>
+    <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+    <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+    <p class="trip-text">Status: ${trip.status}</p>
+    <p class="trip-text">Cost: $${trip.cost}</p>
     `
   })
   currentUser.pendingTrips.forEach((trip) => {
     pendingTripBoard.innerHTML += `
-    <img src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
-    <h3>${trip.destinationInfo.destination}</h3>
-    <p>Status: ${trip.status}</p>
-    <p>Cost: $${trip.cost}</p>
+    <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+    <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
+    <p class="trip-text">Status: ${trip.status}</p>
+    <p class="trip-text">Cost: $${trip.cost}</p>
     `
   })
 }
@@ -304,7 +307,6 @@ const logout = () => {
   loginPage.classList.remove('hidden');
   dashboard.classList.add('hidden')
   logoutBtn.classList.add('hidden');
-  navBar.classList.add('hidden');
   loginUsername.value = '';
   loginPassword.value = '';
 }
@@ -312,7 +314,8 @@ const logout = () => {
 
 // Event Listeners 
 
+window.addEventListener('load', fetchData)
 estimateTripTotalBtn.addEventListener('click', showTripEstimate);
 tripConfirmationBtn.addEventListener('click', submitNewTrip);
-loginBtn.addEventListener('click', (event) => fetchData(event));
+// loginBtn.addEventListener('click', (event) => fetchData(event));
 logoutBtn.addEventListener('click', logout);
