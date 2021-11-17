@@ -10,7 +10,7 @@
   <title>Travel Tracker</title>
 </head>
 <body>
-  <section class="login-page" id="loginPage">
+  <section class="login-page hidden" id="loginPage">
     <form class="login-form">
       <label for="loginUsername"></label>
       <input type="text" placeholder="Username" id="loginUsername">
@@ -19,8 +19,8 @@
       <button class="login-button" id="loginButton" label="loginButton">Hit the Road</button>
     </form>
   </section>
-  <main class="dashboard hidden" id="dashboard">
-    <button class="logoutBtn hidden" id="logoutBtn">Logout</button>
+  <main class="dashboard" id="dashboard">
+    <button class="logoutBtn" id="logoutBtn">Logout</button>
     <header>
       <div class="header-container">
         <h1 class="header-greeting" id="headerGreeting">Greetings, User!</h1>
@@ -31,15 +31,15 @@
       </div>
     </header>
     <div class="header-container">
-      <h2>Where do you want to go?</h2>
+      <h2 class="trip-board-header">Where do you want to go?</h2>
     </div>
     <section type="form" class="main-form">
-      <label for="formDate" class="viewed-label">Departure Date</label>
-      <input type="date" id="formDate" min="${today}">
-      <label for="formDuration" class="viewed-label">Trip Duration</label>
-      <input type="number" min="1" max="365" id="formDuration">
-      <label for="formNumberTravelers" class="viewed-label">Number of Travelers</label>
-      <input type="number" min="1" max="100" id="formNumberTravelers">
+      <label for="formDate" class="form-label">Departure</label>
+      <input type="date" id="formDate" min="2021/11/17">
+      <label for="formDuration"></label>
+      <input type="number" min="1" max="365" id="formDuration" placeholder="Duration" class="number-input">
+      <label for="formNumberTravelers"></label>
+      <input type="number" min="1" max="100" id="formNumberTravelers" placeholder="Travelers" class="number-input">
       <form class="new-trip-form" id="newTripForm" label="new trip form">
         <select label="destination selector" class="destination-selector" id="destinationSelector">
           <option>

@@ -13,7 +13,6 @@ import dayjs from 'dayjs';
 // Global Variables
 
 const today = dayjs().format('YYYY/MM/DD');
-console.log(today)
 let currentUser;
 let travelerRepo;
 let tripRepo;
@@ -49,8 +48,8 @@ const logoutBtn = document.querySelector('#logoutBtn');
 
 // Functions
 
-const fetchData = (event) => {
-  event.preventDefault();
+const fetchData = () => {
+  // event.preventDefault();
   Promise.all([ fetchTravelers(), fetchTrips(), fetchDestinations() ])
     .then(data => {
       return Promise.all(data.map(result => result.json()));
@@ -81,19 +80,19 @@ const getDestinations = (destinationData) => {
   destinationRepo.createDestinationList();
 }
 
-const getCurrentUser = () => {
-  let travelerID = loginUsername.value.split('r')[2];
-  let parsedID = parseInt(travelerID);
-  if (loginPassword.value === 'travel') {
-    currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
-    dashboard.classList.remove('hidden');
-    loginPage.classList.add('hidden');
-    logoutBtn.classList.remove('hidden');
-  } else {
-    alert('Invalid password. Try again.');
-    logout();
-  }
-}
+// const getCurrentUser = () => {
+//   let travelerID = loginUsername.value.split('r')[2];
+//   let parsedID = parseInt(travelerID);
+//   if (loginPassword.value === 'travel') {
+//     currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
+//     dashboard.classList.remove('hidden');
+//     loginPage.classList.add('hidden');
+//     logoutBtn.classList.remove('hidden');
+//   } else {
+//     alert('Invalid password. Try again.');
+//     logout();
+//   }
+// }
 
 const updateGreeting = () => {
   headerGreeting.innerText = `Greetings, ${currentUser.getFirstName()}!`;
@@ -132,7 +131,8 @@ const updateTotal = () => {
 }
 
 const updateDOM = () => {
-  getCurrentUser();
+  currentUser = travelerRepo.travelerList[43];
+  // getCurrentUser();
   updateGreeting();
   getCurrentUserTrips();
   getTripCost();
@@ -319,7 +319,8 @@ const logout = () => {
 
 // Event Listeners 
 
+window.addEventListener('load', fetchData);
 estimateTripTotalBtn.addEventListener('click', showTripEstimate);
 tripConfirmationBtn.addEventListener('click', submitNewTrip);
-loginBtn.addEventListener('click', (event) => fetchData(event));
+// loginBtn.addEventListener('click', (event) => fetchData(event));
 logoutBtn.addEventListener('click', logout);

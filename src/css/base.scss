@@ -13,10 +13,10 @@ html {
 }
 
 body {
+  @include centered();
   color: $header-text-color;
   height: 100%;
   width: 100%;
-  @include centered();
   font-family: $font;
   align-items: center;
 }
@@ -39,10 +39,13 @@ aside {
 // header
 
 header {
+  @include centered();
   height: 20%;
   padding-bottom: $more-space;
-  @include centered();
-  padding-left: $more-space;
+  background-color: $header-background;
+  padding: $less-space;
+  margin: $less-space;
+
 }
 
 .header-container {
@@ -54,6 +57,10 @@ header {
 .header-greeting {
   font-size: $header;
   padding-bottom: $more-space;
+}
+
+.header-message {
+  font-size: $subheader;
 }
 
 .header-icon {
@@ -68,11 +75,40 @@ header {
 }
 
 .new-trip-cost-container {
-  background-color: $card-background;
+  background-color: $header-background;
   margin: $padding;
+}
+.form-label {
+  padding: 20px;
+}
+
+.number-input {
+  width: 120px;
+}
+
+.destination-selector, input {
+  font-family: $font;
+  padding: 5px;
+  padding-right: $padding;
+  margin-right: $padding;
+  border-radius: 5px;
+  border: 0px;
 }
 
 // trip board
+
+.trip-board-header {
+  padding: $padding;
+  font-size: $subheader;
+  background-color: $header-background;
+  border-radius: 5px;
+  padding: $padding;
+  margin: $less-space;
+}
+
+.current-trip-message {
+  font-size: $smaller;
+}
 
 .main-trips-board {
   @include centered();
@@ -114,12 +150,11 @@ header {
   border-radius: 8px;
   padding: $padding;
   margin: $padding;
-  // text-shadow: $shadow;
 }
 
 .trip-board-img {
-  height: 140px;
-  width: 200px;
+  height: 200px;
+  width: 240px;
   padding: 10px;
 }
 
@@ -128,60 +163,27 @@ header {
   font-size: $smallest;
 }
 
+// buttons
+
 button {
   border: 0px;
   border-radius: 5px;
   padding: 5px;
   margin-left: $padding;
+  margin-bottom: $less-space;
   font-family: $font;
   font-size: 1vw;
-}
-
-
-h2 {
-  font-size: $subheader;
 }
 
 .logoutBtn {
   margin-top: $more-space;
 }
 
-
-
-.destination-selector, input {
-  font-family: $font;
-  padding: 5px;
-  padding-right: $padding;
-  margin-right: $padding;
-  border-radius: 5px;
-  border: 0px;
-}
-
-.viewed-label {
-  padding: 6.5px;
-  margin-right: 10px;
-  background-color: $card-background;
-  border-radius: 5px;
-}
+// hide
 
 .hidden {
   display: none;
 }
-
-.trip-board-header {
-  padding: $padding;
-  font-size: $subheader;
-}
-
-.current-trip-message {
-  font-size: $smaller;
-}
-
-// input {
-//   margin-right: $padding;
-//   border-radius: 5px;
-//   border: 0px;
-// }
 
 
 
