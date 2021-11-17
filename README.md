@@ -48,8 +48,11 @@ View a demonstration of Travel Tracker [here.](https://user-images.githubusercon
 
 In future iterations of this project, additions to consider would be:
 
+- Ability to interact with the site as a travel agent and approve pending trips
+- Delete functionality to cancel trips
 - A map to show the traveler's prior trips on a global scale
 - Ability to keep a friends list, add friends to trips / share friends' access to the trips board
 - Ability to interact with friends' trips with likes, etc.
+- Additional error handling to prevent adding trips on the same date 
 
 
