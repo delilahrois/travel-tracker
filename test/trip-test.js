@@ -2,6 +2,7 @@ import chai from 'chai';
 const expect = chai.expect;
 const Trip = require('../src/trip');
 const Traveler = require('../src/traveler');
+const Destination = require('../src/destination');
 
 describe('Trip', () => {
 
@@ -9,8 +10,18 @@ describe('Trip', () => {
   let tripDetails;
   let traveler1;
   let travelerDetails;
+  let destination1;
 
   beforeEach(() => {
+
+    destination1 = new Destination({
+      "id": 22,
+      "destination": "Rome, Italy",
+      "estimatedLodgingCostPerDay": 90,
+      "estimatedFlightCostPerPerson": 650,
+      "image": "https://images.unsplash.com/photo-1515542622106-78bda8ba0e5b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
+      "alt": "people standing inside a colosseum during the day"
+    })
 
     tripDetails = [
       {
@@ -62,6 +73,7 @@ describe('Trip', () => {
     };
 
     trip1 = new Trip(tripDetails[2]);
+    trip1.destinationInfo = destination1;
 
     traveler1 = new Traveler(travelerDetails);
 
@@ -116,4 +128,15 @@ describe('Trip', () => {
 
     expect(trip1.suggestedActivities).to.be.an('array');
   });
+
+  it('should have a property that will hold the destination', () => {
+
+    expect(trip1.destinationInfo).to.equal(destination1);
+  });
+
+  it('should have a cost that will be assigned using the destination', () => {
+
+    trip1.getCost();
+    expect(trip1.cost).to.equal(4130);
+  })
 });

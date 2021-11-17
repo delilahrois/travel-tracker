@@ -6,52 +6,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Yuji+Syuku&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald&family=Yuji+Syuku&display=swap" rel="stylesheet">
   <title>Travel Tracker</title>
 </head>
 <body>
-  <aside class="nav">
-    <button>Calendar</button>
-    <button>Map</button>
-    <button>Login / Logout</button>
-  </aside>
-  <main>
+  <section class="login-page" id="loginPage">
+    <form class="login-form">
+      <label for="loginUsername"></label>
+      <input type="text" placeholder="Username" id="loginUsername">
+      <label for="loginPassword"></label>
+      <input type="password" placeholder="Password" id="loginPassword">
+      <button class="login-button" id="loginButton" label="loginButton">Hit the Road</button>
+    </form>
+  </section>
+  <main class="dashboard hidden" id="dashboard">
+    <button class="logoutBtn hidden" id="logoutBtn">Logout</button>
     <header>
       <div class="header-container">
-        <h1 id="header-greeting">Greetings, User!</h1>
-        <h2 id="header-message">You have spent $$$ on trips this year.</h2>
+        <h1 class="header-greeting" id="headerGreeting">Greetings, User!</h1>
+        <h2 class="header-message" id="headerMessage">You have spent $$$ on trips this year.</h2>
       </div>
       <div>
-        <img src="https://cdn-icons-png.flaticon.com/512/2798/2798112.png" alt="company logo">
+        <img class="header-icon" src="https://cdn-icons-png.flaticon.com/512/2798/2798112.png" alt="company logo">
       </div>
     </header>
+    <div class="header-container">
+      <h2 class="trip-board-header">Where do you want to go?</h2>
+    </div>
     <section type="form" class="main-form">
-      <h2>Where do you want to go?</h2>
-      <label for="date">Departure Date</label>
-      <input type="date" name="date" id="formDate">
-      <label for="duration">Trip Duration</label>
-      <input type="number" min="1" max="365" name="duration" id="formDuration">
-      <label for="numberTravelers">Number of Travelers</label>
-      <input type="number" min="1" max="100" name="numberTravelers" id="formNumberTravelers">
-      <label for="destination">Destination</label>
-      <select name="destination" id="formDestination">
-        <option>Select Your Destination</option>
-      </select>
+      <label for="formDate" class="form-label">Departure</label>
+      <input type="date" id="formDate" min="2021/11/17">
+      <label for="formDuration"></label>
+      <input type="number" min="1" max="365" id="formDuration" placeholder="Duration" class="number-input">
+      <label for="formNumberTravelers"></label>
+      <input type="number" min="1" max="100" id="formNumberTravelers" placeholder="Travelers" class="number-input">
+      <form class="new-trip-form" id="newTripForm" label="new trip form">
+        <select label="destination selector" class="destination-selector" id="destinationSelector">
+          <option>
+            Choose Your Next Destination
+          </option>
+        </select>
+        <div class="new-trip-cost-container hidden" id="newTripCostContainer">
+          <h3 class="new-trip-cost-header">Trip Estimate:</h3>
+        </div>
+      </form>
+      <button id="estimateTripTotalBtn">See Trip Estimate</button>
+      <button class="hidden" id="tripConfirmationBtn">Confirm</button>
     </section>
     <section class="main-current-trip">
       <article class="main-current-trip-board" id="currentTripBoard">
-        
+        <div class="destination-container">
+          <p class="current-trip-message">You are not currently traveling! We can't wait to see where you'll go next.</p>
+        </div>
       </article>
     </section>
     <section class="main-trips-board">
       <article class="main-trips-board-destination" id="pastTripBoard">
-        <h3>Past Trips</h3>
+        <div class="destination-container">
+          <h2 class="trip-board-header">Past Trips</h2>
+        </div>
       </article>
       <article class="main-trips-board-destination" id="upcomingTripBoard">
-        <h3>Upcoming Trips</h3>
+        <div class="destination-container">
+          <h2 class="trip-board-header">Upcoming Trips</h2>
+        </div>
       </article>
       <article class="main-trips-board-destination" id="pendingTripBoard">
-        <h3>Pending Trips</h3>
+        <div class="destination-container">
+          <h2 class="trip-board-header">Pending Trips</h2>
+        </div>
       </article>
     </section>
   </main>

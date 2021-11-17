@@ -21,7 +21,8 @@ class TravelerRepository {
   }
 
   getRandomTraveler() {
-    return this.travelerList[Math.floor(Math.random() * this.travelerList.length)];
+    return this.travelerList[Math.floor(Math.random() * 
+      this.travelerList.length)];
   }
 }
 

@@ -1,89 +1,189 @@
 @import '_variables';
+@import '_reset';
+@import '_mixins';
+
+// body
+
+html {
+  background-image: $background-img;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
 
 body {
-  background: $primary-background;
+  @include centered();
   color: $header-text-color;
-  margin: 0 auto;
-  height: 100vh;
-  display: flex;
-  flex-direction: row;
+  height: 100%;
+  width: 100%;
   font-family: $font;
+  align-items: center;
 }
+
+// login page
+
+.login-page {
+  @include centered();
+  align-items: center;
+  padding-top: 20%;
+}
+
+// nav bar
 
 aside {
-  border: 2px solid orange;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  width: 10%;
+  @include centered();
+  width: 5%;
 }
 
+// header
+
 header {
-  border: 2px solid red;
-  height: 25%;
-  display: flex;
-  justify-content: space-between;
+  @include centered();
+  height: 20%;
+  padding-bottom: $more-space;
+  background-color: $header-background;
+  padding: $less-space;
+  margin: $less-space;
+  border-radius: 5px;
+}
+
+.header-container {
+  @include centered();
+  flex-direction: column;
+  align-items: center;
+}
+
+.header-greeting {
+  font-size: $header;
+  padding-bottom: $more-space;
+}
+
+.header-message {
+  font-size: $subheader;
+}
+
+.header-icon {
+  height: 200px;
+  padding-left: $more-space;
+}
+
+// new trip form
+
+.new-trip-form {
+  padding: $padding;
+}
+
+.new-trip-cost-container {
+  background-color: $header-background;
+  margin: $padding;
+}
+.form-label {
   padding: 20px;
 }
 
-header > div > img {
-  height: 200px;
+.number-input {
+  width: 120px;
 }
 
-main {
-  border: 2px solid blue;
-  width: 90%;
+.destination-selector, input {
+  font-family: $font;
+  padding: 5px;
+  padding-right: $padding;
+  margin-right: $padding;
+  border-radius: 5px;
+  border: 0px;
 }
 
-section {
-  border: 2px solid green;
-  height: 15%;
-  padding-bottom: 20px;
+// trip board
+
+.trip-board-header {
+  padding: $padding;
+  font-size: $subheader;
+  background-color: $header-background;
+  border-radius: 5px;
+  padding: $padding;
+  margin: $less-space;
+}
+
+.current-trip-message {
+  font-size: $smaller;
 }
 
 .main-trips-board {
-  border: 2px solid yellow;
-  display: flex;
+  @include centered();
   flex-direction: row;
   height: 40%;
-  
 }
 
 .main-current-trip {
-  border: 2px solid magenta;
-  height: 18%;
+  @include centered();
+  height: 30%;
+  align-items: center;
+  padding: $padding;
 }
 
-.main-form {
-  padding-left: 20px;
+.main-current-trip-board, .main-form {
+  @include centered();
+  align-items: center;
 }
 
-article {
-  border: 2px solid pink;
+.main-current-trip-board {
+  flex-direction: column;
+  width: 100%;
+}
+
+.main-trips-board-destination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: $padding;
   width: 33.33%;
-  // padding: 20px;
-  margin-bottom: 20px;
-  padding-left: 20px;
+  margin-bottom: $padding;
 }
 
-p {
-  border: 2px solid black;
+.destination-container {
+  @include centered();
+  flex-direction: column;
+  align-items: center;
+  background-color: $card-background;
+  border-radius: 8px;
+  padding: $padding;
+  margin: $padding;
 }
+
+.trip-board-img {
+  height: 200px;
+  width: 240px;
+  padding: 10px;
+}
+
+.trip-text {
+  padding: 10px;
+  font-size: $smallest;
+}
+
+// buttons
 
 button {
   border: 0px;
   border-radius: 5px;
   padding: 5px;
+  margin-left: $padding;
+  margin-bottom: $less-space;
   font-family: $font;
+  font-size: 1vw;
 }
 
-article > img {
-  height: 100px;
+.logoutBtn {
+  margin-top: $more-space;
 }
 
-article > h3 {
-  font-size: x-large;
+// hide
+
+.hidden {
+  display: none;
 }
+
 
 

@@ -115,8 +115,6 @@ describe('TripRepository', () => {
 
     tripRepo = new TripRepository(tripsData);
 
-    tripRepo.createTripsList();
-
   });
 
   it('should be a function', () => {
@@ -126,12 +124,25 @@ describe('TripRepository', () => {
 
   it('should be able to create a list of trips', () => {
 
+    expect(tripRepo.tripList.length).to.equal(0);
+
+    tripRepo.createTripsList();
+
+    expect(tripRepo.tripList.length).to.equal(10);
     expect(tripRepo.tripList[0]).to.be.an.instanceOf(Trip);
   });
 
-  it('should have a list of suggested activities', () => {
+  it('should have a list of the current travelers trips', () => {
 
-    expect(tripRepo.tripList[0].suggestedActivities).to.be.an('array');
+    expect(tripRepo.currentUserTrips).to.be.an('array');
   });
+
+  it('should be able to get trips by ID', () => {
+
+    tripRepo.createTripsList();
+    tripRepo.getTripsByID(44);
+
+    expect(tripRepo.currentUserTrips.length).to.equal(1);
+  })
   
 });
