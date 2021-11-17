@@ -48,8 +48,8 @@ const logoutBtn = document.querySelector('#logoutBtn');
 
 // Functions
 
-const fetchData = () => {
-  // event.preventDefault();
+const fetchData = (event) => {
+  event.preventDefault();
   Promise.all([ fetchTravelers(), fetchTrips(), fetchDestinations() ])
     .then(data => {
       return Promise.all(data.map(result => result.json()));
@@ -80,19 +80,19 @@ const getDestinations = (destinationData) => {
   destinationRepo.createDestinationList();
 }
 
-// const getCurrentUser = () => {
-//   let travelerID = loginUsername.value.split('r')[2];
-//   let parsedID = parseInt(travelerID);
-//   if (loginPassword.value === 'travel') {
-//     currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
-//     dashboard.classList.remove('hidden');
-//     loginPage.classList.add('hidden');
-//     logoutBtn.classList.remove('hidden');
-//   } else {
-//     alert('Invalid password. Try again.');
-//     logout();
-//   }
-// }
+const getCurrentUser = () => {
+  let travelerID = loginUsername.value.split('r')[2];
+  let parsedID = parseInt(travelerID);
+  if (loginPassword.value === 'travel') {
+    currentUser = new Traveler(travelerRepo.findTraveler(parsedID));
+    dashboard.classList.remove('hidden');
+    loginPage.classList.add('hidden');
+    logoutBtn.classList.remove('hidden');
+  } else {
+    alert('Invalid password. Try again.');
+    logout();
+  }
+}
 
 const updateGreeting = () => {
   headerGreeting.innerText = `Greetings, ${currentUser.getFirstName()}!`;
@@ -127,12 +127,12 @@ const getAnnualTotal = () => {
 }
 
 const updateTotal = () => {
-  headerMessage.innerText = `You have spent $${currentUser.totalSpentOnTripsThisYear} on trips this year.`;
+  headerMessage.innerText = 
+`You have spent $${currentUser.totalSpentOnTripsThisYear} on trips this year.`;
 }
 
 const updateDOM = () => {
-  currentUser = travelerRepo.travelerList[43];
-  // getCurrentUser();
+  getCurrentUser();
   updateGreeting();
   getCurrentUserTrips();
   getTripCost();
@@ -201,7 +201,8 @@ const displayTripBoard = () => {
   currentUser.pastTrips.forEach((trip) => {
     pastTripBoard.innerHTML += `
     <div class="destination-container">
-      <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <img class="trip-board-img" src="${trip.destinationInfo.image}" 
+        alt="${trip.destinationInfo.alt}">
       <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
       <p class="trip-text">Status: ${trip.status}</p>
       <p class="trip-text">Cost: $${trip.cost}</p>
@@ -211,7 +212,8 @@ const displayTripBoard = () => {
   currentUser.upcomingTrips.forEach((trip) => {
     upcomingTripBoard.innerHTML += `
     <div class="destination-container">
-      <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <img class="trip-board-img" src="${trip.destinationInfo.image}" 
+        alt="${trip.destinationInfo.alt}">
       <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
       <p class="trip-text">Status: ${trip.status}</p>
       <p class="trip-text">Cost: $${trip.cost}</p>
@@ -221,7 +223,8 @@ const displayTripBoard = () => {
   currentUser.pendingTrips.forEach((trip) => {
     pendingTripBoard.innerHTML += `
     <div class="destination-container">
-      <img class="trip-board-img" src="${trip.destinationInfo.image}" alt="${trip.destinationInfo.alt}">
+      <img class="trip-board-img" src="${trip.destinationInfo.image}" 
+        alt="${trip.destinationInfo.alt}">
       <h3 class="current-trip-message">${trip.destinationInfo.destination}</h3>
       <p class="trip-text">Status: ${trip.status}</p>
       <p class="trip-text">Cost: $${trip.cost}</p>
@@ -251,12 +254,13 @@ const createNewTrip = () => {
     status: 'pending',
     suggestedActivities: []
   })
-  if (!currentUser.pendingTrips.includes(newTrip)) {
+  if (!currentUser.pendingTrips.includes(newTrip) 
+    && dayjs(formDateInput.value).format('YYYY/MM/DD') >= today) {
     currentUser.pendingTrips.push(newTrip);
     tripRepo.tripList.push(newTrip);
     tripRepo.currentUserTrips.push(newTrip);
   } else {
-    console.log('Error')
+    alert('Please select a valid date.');
   }
 }
 
@@ -270,7 +274,7 @@ const postNewTrip = () => {
   }).then(response => response.json())
     .then(getCurrentUserTrips(), getTripCost())
     .then(displayTripBoard())
-    .then(updateTotal())
+    .then(updateTotal(), console.log(newTrip))
     .catch(error => alert('Error. Your trip has not been accepted.', error))
 }
 
@@ -319,8 +323,7 @@ const logout = () => {
 
 // Event Listeners 
 
-window.addEventListener('load', fetchData);
 estimateTripTotalBtn.addEventListener('click', showTripEstimate);
 tripConfirmationBtn.addEventListener('click', submitNewTrip);
-// loginBtn.addEventListener('click', (event) => fetchData(event));
+loginBtn.addEventListener('click', (event) => fetchData(event));
 logoutBtn.addEventListener('click', logout);
